@@ -61,6 +61,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     icon: Icons.email,
                     controller: emailController,
                     validator: validateEmail,
+                     // keyboardType: TextInputType.emailAddress
+
                   ),
                   const SizedBox(height: 12),
 
