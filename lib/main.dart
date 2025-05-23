@@ -3,6 +3,7 @@ import 'screens/welcome_screen.dart';
 import 'screens/chat_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp() ;
@@ -11,17 +12,18 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       title: 'Slide app',
+
+      title: 'Flutter Demo',
+
       theme: ThemeData(
-        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: ChatScreen(),
     );
   }
 }
-
-
