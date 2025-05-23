@@ -10,8 +10,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-//test
-  //sdskc
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
