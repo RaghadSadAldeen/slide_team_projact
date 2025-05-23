@@ -67,6 +67,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     required String email,
                     required String major,
                   }) {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => ProfileScreen(
+                    //       name: name,
+                    //       phone: phone,
+                    //       address: address,
+                    //       email: email,
+                    //       major: major,
+                    //     ),
+                    //   ),
+                    // );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -76,6 +88,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           address: address,
                           email: email,
                           major: major,
+                          imageFile: _imageFile, // <-- أرسل الصورة هنا
                         ),
                       ),
                     );

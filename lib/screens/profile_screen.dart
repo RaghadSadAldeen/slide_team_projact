@@ -1,17 +1,19 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:slide_app/constants/colors.dart';
 import 'package:slide_app/widgets/profile_screen/text_profile.dart';
 import 'package:slide_app/widgets/profile_screen/bottom_profile.dart';
 import 'package:slide_app/screens/edit_profile_screen.dart';
 import 'package:slide_app/constants/text_styles.dart';
+import '../widgets/profile_screen/profile_avatar.dart';
 
-
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   final String name;
   final String phone;
   final String address;
   final String email;
   final String major;
+  final File? imageFile;
 
   const ProfileScreen({
     super.key,
@@ -20,7 +22,25 @@ class ProfileScreen extends StatelessWidget {
     required this.address,
     required this.email,
     required this.major,
+    this.imageFile,
   });
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late String name, phone, address, email, major;
+
+  @override
+  void initState() {
+    super.initState();
+    name = widget.name;
+    phone = widget.phone;
+    address = widget.address;
+    email = widget.email;
+    major = widget.major;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +58,6 @@ class ProfileScreen extends StatelessWidget {
               style: sectionTitleStyle,
             ),
           ),
-
           Stack(
             alignment: Alignment.center,
             children: [
@@ -52,17 +71,11 @@ class ProfileScreen extends StatelessWidget {
               Column(
                 children: [
                   const SizedBox(height: 20),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Image.network(
-                      'https://th.bing.com/th/id/OIP.vJ_K7NuQb8FWYUnvYZo6BAHaLH?cb=iwc2&rs=1&pid=ImgDetMain',
-                      height: 175,
-                      width: 175,
-                      fit: BoxFit.cover,
-                    ),
+                  ProfileAvatar(
+                    imageFile: widget.imageFile,
+                    size: 175,
                   ),
                   const SizedBox(height: 10),
-
                   TextProfile(
                     name: name,
                     major: major,
@@ -74,30 +87,45 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: BottomProfileButtons(
-              onEditPressed: () {
-                // رابط زر Edit Profile
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const EditProfileScreen()),
-                );
-              },
-              onLogoutPressed: () {
-                // وظيفة زر Logout
+          Column(
+            children: [
+              CustomProfileButton(
+                label: 'Edit Profile',
+                icon: Icons.edit,
+                onPressed: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EditProfileScreen(),
+                    ),
+                  );
 
-              },
-            ),
-          ),
-
+                  if (result != null && result is Map<String, String>) {
+                    setState(() {
+                      name = result['name'] ?? name;
+                      phone = result['phone'] ?? phone;
+                      address = result['address'] ?? address;
+                      email = result['email'] ?? email;
+                      major = result['major'] ?? major;
+                    });
+                  }
+                },
+              ),
+              const SizedBox(height: 15),
+              CustomProfileButton(
+                label: 'Logout',
+                icon: Icons.logout,
+                onPressed: () {
+                  //مع شبارو ع صفحة sign in
+                },
+              ),
+            ],
+          )
         ],
       ),
     );
   }
 }
-
-// ClipPath لتصميم منحني علوي
 class ArcClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -108,7 +136,6 @@ class ArcClipper extends CustomClipper<Path> {
     path.close();
     return path;
   }
-
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

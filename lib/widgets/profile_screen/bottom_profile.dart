@@ -1,42 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:slide_app/constants/colors.dart'; // لو تستخدم متغيرات الألوان هنا
+import 'package:slide_app/constants/colors.dart';
 
-class BottomProfileButtons extends StatelessWidget {
-  final VoidCallback? onEditPressed;
-  final VoidCallback? onLogoutPressed;
+class CustomProfileButton extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final VoidCallback onPressed;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
 
-  const BottomProfileButtons({
+  const CustomProfileButton({
     super.key,
-    this.onEditPressed,
-    this.onLogoutPressed,
+    required this.label,
+    required this.icon,
+    required this.onPressed,
+    this.backgroundColor,
+    this.foregroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ElevatedButton.icon(
-          onPressed: onEditPressed ?? () {},
-          icon: const Icon(Icons.edit, size: 20),
-          label: const Text('Edit Profile'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green[100],
-            foregroundColor: blackColor,
-            minimumSize: const Size(double.infinity, 45),
-          ),
+    return SizedBox(
+      width: 310, // العرض الثابت
+      height: 50, // الارتفاع الثابت
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon, size: 20),
+        label: Text(label),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor ?? Colors.green[100],
+          foregroundColor: foregroundColor ?? blackColor,
         ),
-        const SizedBox(height: 15),
-        ElevatedButton.icon(
-          onPressed: onLogoutPressed ?? () {},
-          icon: const Icon(Icons.logout),
-          label: const Text('Logout'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green[100],
-            foregroundColor: blackColor,
-            minimumSize: const Size(double.infinity, 45),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

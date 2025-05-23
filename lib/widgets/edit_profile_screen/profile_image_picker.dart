@@ -40,6 +40,7 @@ class ProfileImagePicker extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
+
         Positioned(
           bottom: 8,
           right: 8,
