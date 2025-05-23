@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
-
-// لعناوين الصفحات الكبيرة
+ import 'colors.dart';
+// // لعناوين الصفحات الكبيرة
 const TextStyle appTitleStyle = TextStyle(
   fontSize: 32,
   fontWeight: FontWeight.bold,
   color: darkTeal,
 );
-
-// لعناوين الأقسام أو الكروت
+//
+// // لعناوين الأقسام أو الكروت
 const TextStyle sectionTitleStyle = TextStyle(
   fontSize: 24,
   fontWeight: FontWeight.w700,
   color: darkTeal,
 );
-
-// للنصوص العادية في الشاشات
+//
+// // للنصوص العادية في الشاشات
 const TextStyle bodyTextStyle = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.normal,
   color: blackColor,
 );
-
-// للنصوص الثانوية أو التوضيحية
-const TextStyle subtitleTextStyle = TextStyle(
-  fontSize: 14,
-  color: Colors.grey,
-);
-
+//
+// // للنصوص الثانوية أو التوضيحية
+// const TextStyle subtitleTextStyle = TextStyle(
+//   fontSize: 14,
+//   color: Colors.grey,
+// );
+//
 // للأزرار الأساسية
 const TextStyle buttonTextStyle = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.bold,
   color: Colors.white,
 );
-
+/////////////////////////
 // لعناوين داخل الفورم أو حقول الإدخال
 const TextStyle formLabelStyle = TextStyle(
   fontSize: 14,
