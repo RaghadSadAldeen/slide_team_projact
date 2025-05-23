@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertest/datasource/data.dart';
-import 'package:fluttertest/models/college.dart';
-import 'package:fluttertest/widgets/bottom_nav_bar.dart';
-import 'package:fluttertest/widgets/major_card.dart';
-import 'package:fluttertest/widgets/app_bar.dart';
+import 'package:slide_team_project/datasource/data.dart';
+import 'package:slide_team_project/models/college.dart';
+import 'package:slide_team_project/constants/bottom_nav_bar.dart';
+import 'package:slide_team_project/widgets/major_card.dart';
+import 'package:slide_team_project/widgets/app_bar.dart';
 import 'materials_page.dart';
 
 class CollegeMajorsScreen extends StatefulWidget {

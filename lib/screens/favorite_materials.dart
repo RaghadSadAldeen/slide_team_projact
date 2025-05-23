@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertest/widgets/bottom_nav_bar.dart';
+import 'package:slide_team_project/constants/bottom_nav_bar.dart';
 
 class FavoriteMaterialsPage extends StatefulWidget {
   const FavoriteMaterialsPage({super.key});

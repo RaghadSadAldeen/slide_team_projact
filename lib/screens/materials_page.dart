@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertest/screens/favorite_materials.dart';
-import 'package:fluttertest/widgets/app_bar.dart';
-import 'package:fluttertest/widgets/bottom_nav_bar.dart';
+import 'package:slide_team_project/screens/favorite_materials.dart';
+import 'package:slide_team_project/widgets/app_bar.dart';
+import 'package:slide_team_project/constants/bottom_nav_bar.dart';
 
 class MaterialsPage extends StatefulWidget {
   final String majorName;
