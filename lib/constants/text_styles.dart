@@ -13,8 +13,16 @@ const TextStyle sectionTitleStyle = TextStyle(
   fontWeight: FontWeight.w700,
   color: darkTeal,
 );
-//
-// // للنصوص العادية في الشاشات
+
+
+const TextStyle appBarTitleStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+  color: darkTeal,
+);
+
+// للنصوص العادية في الشاشات
+
 const TextStyle bodyTextStyle = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.normal,

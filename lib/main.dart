@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
-import 'screens/create_account_screen.dart';
-import 'screens/subject_content_screen.dart';
-import 'package:slide_team_project/screens/reset_password_screen.dart';
 
-void main() {
+import 'screens/welcome_screen.dart';
+import 'screens/chat_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp() ;
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Slide App',
-      initialRoute: '/create-account',
-      routes: {
-        '/create-account': (context) => const CreateAccountScreen(),
-        '/login': (context) => const LoginScreen(),
-      },
-      //home:SubjectContentScreen(),
+
+      title: 'Slide app',
+
+      title: 'Flutter Demo',
+
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
+      home: ChatScreen(),
     );
   }
 }
-
-

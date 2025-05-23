@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "3726596232",
+    "project_id": "slide-app-58788",
+    "storage_bucket": "slide-app-58788.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3726596232:android:9b3481b70b76630692673d",
+        "android_client_info": {
+          "package_name": "com.masa.slide_team_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbwlAVdBylhJg8KHa85RxLnm8eu8FpROw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
