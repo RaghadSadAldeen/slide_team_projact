@@ -1,22 +1,21 @@
-name: slide_team_project
+name: slide_app
 description: "A new Flutter project."
-publish_to: 'none'
-
 version: 1.0.0+1
 
+# بيئة العمل المطلوبة
 environment:
   sdk: ^3.7.2
 
-dependencies:
-  flutter:
-    sdk: flutter
   cupertino_icons: ^1.0.8
   cached_network_image: ^3.3.1
 
+  # لالتقاط الصور من الكاميرا أو المعرض
+  image_picker: ^1.1.0
+
+  # أيقونات جاهزة بتصميم جميل
+  line_awesome_flutter: ^2.0.0
+
+# حزم التطوير والاختبار
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
-
-flutter:
-  uses-material-design: true
