@@ -57,6 +57,13 @@ void messagesStreams() async {
       backgroundColor: sageGreen,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+
         title: Row(
           children: [
             Image.asset('images/slide.png', height: 25),
@@ -82,11 +89,12 @@ void messagesStreams() async {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MessageStreamBuilder(signedInUser: signedInUser),
+
             Container(
               //decoration: BoxDecoration(
-                color: Colors.white,
-              padding: EdgeInsets.only(bottom: 8),
-              child: Container(
+               // color: Colors.white,
+              //padding: EdgeInsets.only(bottom: 8),
+              //child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
                 border: Border(
@@ -97,6 +105,7 @@ void messagesStreams() async {
                   ),
                 ),
               ),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -139,7 +148,7 @@ void messagesStreams() async {
                 ],
               ),
             ),
-            ),
+           // ),
           ],
         ),
       ),
