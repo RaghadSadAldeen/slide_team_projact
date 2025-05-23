@@ -4,7 +4,6 @@
   import 'package:slide_team_project/constants/colors.dart';
   import 'package:slide_team_project/constants/text_styles.dart';
 
-
   class WelcomeScreen extends StatefulWidget {
     const WelcomeScreen({Key? key}) : super(key: key);
 
@@ -13,6 +12,8 @@
   }
 
   class _WelcomeScreenState extends State<WelcomeScreen> {
+
+
     @override
     Widget build(BuildContext context) {
       return Scaffold(
@@ -42,7 +43,7 @@
                 onPressed: () {},
               ),
               MyButton(
-                color: deepForestGreen,
+                color: sageGreen,
                 title: 'Sign Up',
                 onPressed: () {},
               )
