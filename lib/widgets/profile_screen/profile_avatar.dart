@@ -40,7 +40,7 @@ class ProfileAvatar extends StatelessWidget {
       );
     }
     return CircleAvatar(
-      radius: (size / 2) + 4, // زيادة 4 على نصف الحجم عشان المحيط الأبيض
+      radius: (size / 2) ,
       backgroundColor: whiteColor,
       child: imageWidget,
     );

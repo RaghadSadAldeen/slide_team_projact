@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:slide_app/screens/add_slide_screen.dart';
+import 'package:slide_app/screens/edit_profile_screen.dart';
 
 
 void main() {
@@ -14,7 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-
+home: AddSlideScreen(),
+    // home: EditProfileScreen(),
     );
   }
 }

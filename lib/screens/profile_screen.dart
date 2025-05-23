@@ -54,8 +54,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             color: darkTeal,
             alignment: Alignment.center,
             child: Text(
-              "Profile",
-              style: sectionTitleStyle,
+            'profile',
+              style: sectionTitleStyle.copyWith(color: Colors.white),
             ),
           ),
           Stack(
