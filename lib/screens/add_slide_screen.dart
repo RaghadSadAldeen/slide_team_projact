@@ -83,7 +83,7 @@ class _AddSlideScreenState extends State<AddSlideScreen> {
                 emailController: emailController,
                 slideTitleController: slideTitleController,
                 descriptionController: descriptionController,
-                selectedImage: uploadedSlideImage, // فقط صورة الـ Slide
+                selectedImage: uploadedSlideImage,
               ),
             ],
           ),
