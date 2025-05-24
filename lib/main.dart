@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'screens/create_account_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/chat_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,12 +19,12 @@ class MyApp extends StatelessWidget {
 
       title: 'Slide app',
 
-      title: 'Flutter Demo',
 
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: ChatScreen(),
+      //home: ChatScreen(),
+      home: CreateAccountScreen(),
     );
   }
 }

@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:slide_app/constants/colors.dart';
-import 'package:slide_app/widgets/profile_screen/text_profile.dart';
-import 'package:slide_app/widgets/profile_screen/bottom_profile.dart';
-import 'package:slide_app/screens/edit_profile_screen.dart';
-import 'package:slide_app/constants/text_styles.dart';
+import 'package:slide_team_project/constants/colors.dart';
+import 'package:slide_team_project/widgets/profile_screen/text_profile.dart';
+import 'package:slide_team_project/widgets/profile_screen/bottom_profile.dart';
+import 'package:slide_team_project/screens/edit_profile_screen.dart';
+import 'package:slide_team_project/constants/text_styles.dart';
 import '../widgets/profile_screen/profile_avatar.dart';
 
 class ProfileScreen extends StatefulWidget {

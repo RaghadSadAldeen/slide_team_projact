@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:slide_app/constants/colors.dart';
+import 'package:slide_team_project/constants/colors.dart';
 import 'edit_profile_text.dart';
 
 class EditableFields extends StatefulWidget {
