@@ -14,8 +14,8 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  String userName = ''; // ← اسم المستخدم الديناميكي
-  File? _imageFile;     // ← لتخزين الصورة
+  String userName = '';
+  File? _imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           address: address,
                           email: email,
                           major: major,
-                          imageFile: _imageFile, // <-- أرسل الصورة هنا
+                          imageFile: _imageFile,
                         ),
                       ),
                     );

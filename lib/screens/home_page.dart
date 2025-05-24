@@ -61,10 +61,10 @@ class _CollegeGridScreenState extends State<CollegeGridScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
-      ),
+      // bottomNavigationBar: BottomNavBar(
+      //   selectedIndex: _selectedIndex,
+      //   onItemTapped: _onItemTapped,
+      // ),
       appBar: const CustomAppBar(
         title: 'University Colleges',
         showLeading: false,
