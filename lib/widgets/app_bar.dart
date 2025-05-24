@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slide_team_project/constants/colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -24,7 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: leading,
-      backgroundColor: const Color(0xFF1D3B2A),
+      backgroundColor: deepForestGreen,
       automaticallyImplyLeading: showLeading && !showCustomMenuIcon,
       title:
       showTitle && title != null

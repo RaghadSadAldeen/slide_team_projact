@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slide_team_project/screens/favorite_materials.dart';
 import 'package:slide_team_project/widgets/app_bar.dart';
 import 'package:slide_team_project/constants/bottom_nav_bar.dart';
+import 'package:slide_team_project/constants/colors.dart';
 
 class MaterialsPage extends StatefulWidget {
   final String majorName;
@@ -91,7 +92,7 @@ class _MaterialsPageState extends State<MaterialsPage> {
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF90A88F),
+                      color:  sageGreen,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
