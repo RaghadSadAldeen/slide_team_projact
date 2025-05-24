@@ -5,6 +5,7 @@ import 'package:slide_team_project/widgets/profile_screen/text_profile.dart';
 import 'package:slide_team_project/widgets/profile_screen/bottom_profile.dart';
 import 'package:slide_team_project/screens/edit_profile_screen.dart';
 import 'package:slide_team_project/constants/text_styles.dart';
+import '../widgets/profile_screen/arc_clipper.dart';
 import '../widgets/profile_screen/profile_avatar.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -116,8 +117,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 label: 'Logout',
                 icon: Icons.logout,
                 onPressed: () {
-                  //مع شبارو ع صفحة sign in
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/welcome',
+                        (route) => false, // يمسح كل الراوتات السابقة
+                  );
                 },
+
               ),
             ],
           )
@@ -126,16 +132,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-class ArcClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(0, size.height - 60);
-    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 60);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
+
+

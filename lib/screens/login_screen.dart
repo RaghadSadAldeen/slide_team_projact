@@ -47,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: 'Email',
                     icon: Icons.email,
                     controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
                     validator: validateEmail,
                   ),
                   const SizedBox(height: 16),

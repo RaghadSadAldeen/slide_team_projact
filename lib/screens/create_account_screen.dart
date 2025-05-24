@@ -60,7 +60,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     hintText: 'Email',
                     icon: Icons.email,
                     controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
                     validator: validateEmail,
+
                   ),
                   const SizedBox(height: 12),
 

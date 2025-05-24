@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final TextInputType keyboardType;
 
   const CustomTextField({
     super.key,
@@ -15,6 +16,7 @@ class CustomTextField extends StatelessWidget {
     required this.icon,
     this.obscureText = false,
     required this.controller,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -31,6 +33,7 @@ class CustomTextField extends StatelessWidget {
         obscureText: obscureText,
         style: const TextStyle(color: blackColor),
         validator: validator,
+        keyboardType: keyboardType,
         decoration: InputDecoration(
           icon: Icon(icon, color: deepForestGreen),
           border: InputBorder.none,

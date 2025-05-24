@@ -7,6 +7,8 @@ class CreateAccountTextField extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final TextInputType keyboardType;
+
   const CreateAccountTextField({
     required this.hintText,
     required this.icon,
@@ -14,6 +16,7 @@ class CreateAccountTextField extends StatelessWidget {
     required this.controller,
     this.validator,
     super.key,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -27,6 +30,7 @@ class CreateAccountTextField extends StatelessWidget {
       child :TextFormField(
       controller: controller,
         validator: validator,
+        keyboardType: keyboardType,
       obscureText: obscureText,
       decoration: InputDecoration(
         filled: true,

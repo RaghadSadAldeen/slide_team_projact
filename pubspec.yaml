@@ -36,4 +36,5 @@ flutter:
   assets:
 
     - images/
+    - assets/images/icons8-user-96.png
 
