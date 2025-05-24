@@ -18,15 +18,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // void handleLogin() {
-  //   if (_formKey.currentState!.validate()) {
-  //     print('Email: ${emailController.text}');
-  //     print('Password: ${passwordController.text}');
-  //   }
-  // }
   void handleLogin() {
     if (_formKey.currentState!.validate()) {
-      // ............
+      // ✅ بعد التحقق من صحة البيانات، ننتقل إلى MainNavigation
+      Navigator.pushReplacementNamed(context, '/main');
     }
   }
 
@@ -82,8 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 20),
                   LoginButton(
+                    text: 'Sign In',
                     onPressed: handleLogin,
-                    text: "Sign In",
                   ),
                 ],
               ),

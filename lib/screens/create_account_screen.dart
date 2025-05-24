@@ -61,8 +61,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     icon: Icons.email,
                     controller: emailController,
                     validator: validateEmail,
-                     // keyboardType: TextInputType.emailAddress
-
                   ),
                   const SizedBox(height: 12),
 
@@ -79,9 +77,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     text: 'Sign Up',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        Navigator.pushReplacementNamed(context, '/main');
                       }
                     },
                   ),
+
                   const SizedBox(height: 16),
 
                   Center(

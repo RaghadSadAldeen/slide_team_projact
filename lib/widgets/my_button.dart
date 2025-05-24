@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:slide_team_project/constants/text_styles.dart';
-class MyButton extends StatelessWidget {
-  MyButton({required this.color, required this.title, required this.onPressed});
 
+class MyButton extends StatelessWidget {
   final Color color;
   final String title;
-  final Function onPressed;
+  final VoidCallback onPressed;
+
+  const MyButton({
+    Key? key,
+    required this.color,
+    required this.title,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class MyButton extends StatelessWidget {
         color: color,
         borderRadius: BorderRadius.circular(10),
         child: MaterialButton(
-          onPressed: () => onPressed,
+          onPressed: onPressed,
           minWidth: 200,
           height: 42,
           child: Text(
