@@ -1,6 +1,6 @@
 // lib/widgets/text_profile.dart
 import 'package:flutter/material.dart';
-import 'package:slide_app/constants/colors.dart'; // تأكد أن هذا الملف يحتوي على تعريف whiteColor مثلاً: const whiteColor = Colors.white;
+import 'package:slide_team_project/constants/colors.dart'; // تأكد أن هذا الملف يحتوي على تعريف whiteColor مثلاً: const whiteColor = Colors.white;
 
 class TextProfile extends StatelessWidget {
   final String name;
