@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:slide_app/constants/colors.dart';
+import 'package:slide_team_project/constants/colors.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final File? imageFile;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:slide_app/constants/colors.dart';
-import 'package:slide_app/screens/get_slide_screen.dart';
+import 'package:slide_team_project/constants/colors.dart';
+import 'package:slide_team_project/screens/get_slide_screen.dart';
 
 class SaveButton extends StatelessWidget {
   final TextEditingController nameController;

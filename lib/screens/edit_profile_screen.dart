@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:slide_app/constants/colors.dart';
-import 'package:slide_app/constants/text_styles.dart';
-import 'package:slide_app/widgets/edit_profile_screen/edit_able_Fields.dart';
-import 'package:slide_app/widgets/edit_profile_screen/profile_image_picker.dart'; // استيراد ويدجت الصورة
-import 'package:slide_app/screens/profile_screen.dart';
+import 'package:slide_team_project/constants/colors.dart';
+import 'package:slide_team_project/constants/text_styles.dart';
+import 'package:slide_team_project/widgets/edit_profile_screen/edit_able_Fields.dart';
+import 'package:slide_team_project/widgets/edit_profile_screen/profile_image_picker.dart'; // استيراد ويدجت الصورة
+import 'package:slide_team_project/screens/profile_screen.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});

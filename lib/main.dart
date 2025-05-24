@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
 
       title: 'Slide app',
 
-      title: 'Flutter Demo',
 
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
