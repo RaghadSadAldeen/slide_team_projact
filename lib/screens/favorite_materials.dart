@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slide_team_project/constants/bottom_nav_bar.dart';
-
+import 'package:slide_team_project/constants/colors.dart';
 class FavoriteMaterialsPage extends StatefulWidget {
   const FavoriteMaterialsPage({super.key});
 
@@ -60,7 +60,8 @@ class _FavoriteMaterialsPageState extends State<FavoriteMaterialsPage> {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1D3B2A),
+                    color:  deepForestGreen,
+                    //color
                   ),
                 ),
               ),
@@ -74,7 +75,7 @@ class _FavoriteMaterialsPageState extends State<FavoriteMaterialsPage> {
                     margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF90A88F),
+                      color:  sageGreen,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(

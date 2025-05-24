@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slide_team_project/constants/colors.dart';
 
 class MajorCard extends StatelessWidget {
   final String name;
@@ -20,7 +21,7 @@ class MajorCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         decoration: BoxDecoration(
-          color: const Color(0xFF90A88F),
+          color:  sageGreen,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
