@@ -1,6 +1,10 @@
+import 'package:flutter/material.dart' as flutter;
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:slide_team_project/constants/bottom_nav_bar.dart';
 import 'package:slide_team_project/constants/colors.dart';
+import 'package:slide_team_project/view_models/favorites_view_model.dart';
+
 class FavoriteMaterialsPage extends StatefulWidget {
   const FavoriteMaterialsPage({super.key});
 
@@ -10,40 +14,19 @@ class FavoriteMaterialsPage extends StatefulWidget {
 
 class _FavoriteMaterialsPageState extends State<FavoriteMaterialsPage> {
   int _selectedIndex = 1;
+  final FavoritesViewModel _viewModel = FavoritesViewModel();
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-
-    switch (index) {
-      case 0:
-
-        break;
-      case 1:
-
-        break;
-      case 2:
-
-        break;
-      case 3:
-
-        break;
-    }
   }
-
-  final List<String> favoriteMaterials = [
-    'Materials Name',
-    'Materials Name',
-    'Materials Name',
-    'Materials Name',
-    'Materials Name',
-    'Materials Name',
-  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final userId = FirebaseAuth.instance.currentUser?.uid ?? "guest_user";
+
+    return flutter.Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavBar(
         selectedIndex: _selectedIndex,
@@ -60,38 +43,63 @@ class _FavoriteMaterialsPageState extends State<FavoriteMaterialsPage> {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color:  deepForestGreen,
-                    //color
+                    color: deepForestGreen,
                   ),
                 ),
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemCount: favoriteMaterials.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 12),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color:  sageGreen,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.menu_book, color: Colors.black),
-                        const SizedBox(width: 10),
-                        Text(
-                          favoriteMaterials[index],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
+              child: StreamBuilder<List<Map<String, dynamic>>>(
+                stream: _viewModel.getFavoritesForUser(userId),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const flutter.Center(child: flutter.CircularProgressIndicator());
+                  }
+
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const flutter.Center(child: Text("No favorites yet."));
+                  }
+
+                  final favorites = snapshot.data!;
+                  return ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    itemCount: favorites.length,
+                    itemBuilder: (context, index) {
+                      final fav = favorites[index];
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: sageGreen,
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                      ],
-                    ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.menu_book, color: Colors.black),
+                                const SizedBox(width: 10),
+                                Text(
+                                  fav['name'] ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () async {
+                                await _viewModel.removeFavorite(fav['id']);
+                              },
+                            )
+                          ],
+                        ),
+                      );
+                    },
                   );
                 },
               ),
