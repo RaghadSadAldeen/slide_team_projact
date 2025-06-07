@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
-import '../../constants/colors.dart';
-import '../../constants/text_styles.dart';
-import 'package:slide_team_project/widgets/reset_password/reset_password_text_field.dart';
-import 'package:slide_team_project/widgets/reset_password/reset_password_button.dart';
-import 'package:slide_team_project/utils/validators.dart';
+import '../constants/colors.dart';
+import '../constants/text_styles.dart';
+import '../utils/validators.dart';
+import '../view_models/reset_password_viewmodel.dart';
+import '../widgets/common/custom_button.dart';
+import '../widgets/common/custom_text_field.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class ResetPasswordScreen extends StatefulWidget {
+  const ResetPasswordScreen({super.key});
 
-  ResetPasswordScreen({super.key});
+  @override
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
+}
+
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+  final ResetPasswordViewModel _viewModel = ResetPasswordViewModel();
+
+  @override
+  void dispose() {
+    _viewModel.disposeControllers();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +30,7 @@ class ResetPasswordScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Form(
-            key: _formKey,
+            key: _viewModel.formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -32,19 +43,17 @@ class ResetPasswordScreen extends StatelessWidget {
                   style: bodyTextStyle.copyWith(fontSize: 14, color: Colors.grey[700]),
                 ),
                 const SizedBox(height: 32),
-                ResetPasswordTextField(
-                  controller: emailController,
+                CustomTextField(
+                  hintText: "Email",
+                  icon: Icons.email,
+                  controller: _viewModel.emailController,
                   validator: validateEmail,
+                  keyboardType: TextInputType.emailAddress,
                 ),
                 const SizedBox(height: 24),
-                ResetPasswordButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("need routing)")),
-                      );
-                    }
-                  },
+                CustomButton(
+                  text: "Send Reset Link",
+                  onPressed: () => _viewModel.resetPassword(context),
                 ),
               ],
             ),

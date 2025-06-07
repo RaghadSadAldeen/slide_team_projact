@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:slide_team_project/constants/colors.dart';
 class ArcClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
