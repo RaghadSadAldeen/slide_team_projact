@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:slide_team_project/constants/colors.dart';
-import '../constants/colors.dart';
 import '../constants/text_styles.dart';
 import '../screens/chat_screen.dart';
 import '../widgets/get_screen/tappable_image.dart';

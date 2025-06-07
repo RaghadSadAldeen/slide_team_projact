@@ -3,7 +3,7 @@ import 'package:slide_team_project/datasource/data.dart';
 import 'package:slide_team_project/models/college.dart';
 import 'package:slide_team_project/screens/college_major.dart';
 // import 'package:fluttertest/widgets/college_card.dart';
-import 'package:slide_team_project/constants//bottom_nav_bar.dart';
+//import 'package:slide_team_project/constants//bottom_nav_bar.dart';
 import 'package:slide_team_project/widgets/app_bar.dart';
 
 import '../widgets/college_card.dart';
