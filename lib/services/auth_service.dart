@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:logger/logger.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final Logger _logger = Logger();
 
   Future<User?> signInWithEmailPassword(String email, String password) async {
     try {
@@ -9,15 +11,15 @@ class AuthService {
         email: email,
         password: password,
       );
-      print("Logged in: ${credential.user?.email}");
+      _logger.i("Logged in: ${credential.user?.email}");
       return credential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        _logger.w('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided.');
+        _logger.w('Wrong password provided.');
       } else {
-        print('Error: ${e.message}');
+        _logger.e('Sign-in error: ${e.message}');
       }
       return null;
     }
@@ -30,23 +32,25 @@ class AuthService {
         password: password,
       );
 
-
       await credential.user?.updateDisplayName(name);
       await credential.user?.reload();
 
-      print("Registered user: ${credential.user?.email}");
+      _logger.i("Registered user: ${credential.user?.email}");
       return credential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
+        _logger.w('Email already in use: $email');
         throw 'This email is already in use. Please use a different one.';
       } else if (e.code == 'invalid-email') {
+        _logger.w('Invalid email format: $email');
         throw 'The email address is not valid.';
       } else if (e.code == 'weak-password') {
+        _logger.w('Weak password used for registration.');
         throw 'The password is too weak. It should be at least 6 characters.';
       } else {
+        _logger.e('Registration error: ${e.message}');
         throw e.message ?? 'An unknown error occurred.';
       }
     }
   }
-
 }

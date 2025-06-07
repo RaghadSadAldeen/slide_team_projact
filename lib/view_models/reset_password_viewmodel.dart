@@ -13,9 +13,11 @@ class ResetPasswordViewModel extends ChangeNotifier {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("📩 Password reset email sent.")),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Password reset email sent.")),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       String message;
 
@@ -30,9 +32,11 @@ class ResetPasswordViewModel extends ChangeNotifier {
           message = 'An error occurred: ${e.message}';
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message)),
+        );
+      }
     }
   }
 

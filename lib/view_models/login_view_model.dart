@@ -18,7 +18,9 @@ class LoginViewModel extends ChangeNotifier {
         password: password,
       );
 
-      Navigator.pushReplacementNamed(context, '/main');
+      if (context.mounted) {
+        Navigator.pushReplacementNamed(context, '/CollegeGridScreen');
+      }
 
     } on FirebaseAuthException catch (e) {
       String errorMessage;
@@ -37,9 +39,11 @@ class LoginViewModel extends ChangeNotifier {
           errorMessage = 'Login failed: Invalid email or password';
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMessage)),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage)),
+        );
+      }
     }
   }
 
