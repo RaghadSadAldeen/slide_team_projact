@@ -101,16 +101,16 @@ class _MaterialsPageState extends State<MaterialsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SubjectContentScreen(
-                                  materialTitle: material['title']!,
-                                ),
-                              ),
-                            );
-                          },
+                          // onTap: () {
+                          //   Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => SubjectContentScreen(
+                          //         materialTitle: material['title']!,
+                          //       ),
+                          //     ),
+                          //   );
+                          // },
                           child: Row(
                             children: [
                               const Icon(Icons.menu_book),
