@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../constants/colors.dart';
 import '../constants/text_styles.dart';
-import '../widgets/create_account/create_account_text_field.dart';
-import '../widgets/create_account/create_account_button.dart';
 import '../utils/validators.dart';
+import '../view_models/create_account_viewmodel.dart';
+import '../widgets/common/custom_text_field.dart';
+import '../widgets/common/custom_button.dart';
 
-class CreateAccountScreen extends StatefulWidget {
+class CreateAccountScreen extends StatelessWidget {
   const CreateAccountScreen({super.key});
 
   @override
-  State<CreateAccountScreen> createState() => _CreateAccountScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => CreateAccountViewModel(),
+      child: const _CreateAccountScreenBody(),
+    );
+  }
 }
 
-class _CreateAccountScreenState extends State<CreateAccountScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class _CreateAccountScreenBody extends StatelessWidget {
+  const _CreateAccountScreenBody();
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<CreateAccountViewModel>(context);
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
@@ -28,7 +33,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Form(
-              key: _formKey,
+              key: viewModel.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -43,10 +48,10 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   const Text('Create your account', style: appTitleStyle),
                   const SizedBox(height: 20),
 
-                  CreateAccountTextField(
+                  CustomTextField(
                     hintText: 'Name',
                     icon: Icons.person,
-                    controller: nameController,
+                    controller: viewModel.nameController,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return 'Name is required';
@@ -54,34 +59,28 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 12),
 
-                  CreateAccountTextField(
+                  CustomTextField(
                     hintText: 'Email',
                     icon: Icons.email,
-                    controller: emailController,
+                    controller: viewModel.emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: validateEmail,
-
                   ),
-                  const SizedBox(height: 12),
 
-                  CreateAccountTextField(
+                  CustomTextField(
                     hintText: 'Password',
                     icon: Icons.lock,
                     obscureText: true,
-                    controller: passwordController,
+                    controller: viewModel.passwordController,
                     validator: validatePassword,
                   ),
+
                   const SizedBox(height: 24),
 
-                  CreateAccountButton(
+                  CustomButton(
                     text: 'Sign Up',
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pushReplacementNamed(context, '/main');
-                      }
-                    },
+                    onPressed: () => viewModel.createAccount(context),
                   ),
 
                   const SizedBox(height: 16),
@@ -93,7 +92,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       },
                       child: const Text('Already have an Account? Sign In'),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
