@@ -1,136 +1,123 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:slide_team_project/constants/colors.dart';
-import 'package:slide_team_project/widgets/profile_screen/text_profile.dart';
-import 'package:slide_team_project/widgets/profile_screen/bottom_profile.dart';
-import 'package:slide_team_project/screens/edit_profile_screen.dart';
-import 'package:slide_team_project/constants/text_styles.dart';
-import '../widgets/profile_screen/arc_clipper.dart';
-import '../widgets/profile_screen/profile_avatar.dart';
+import 'package:provider/provider.dart';
+import 'dart:io';
+import '../models/user_profile.dart';
+import '../view_models/profile_view_model.dart';
+import '../view_models/user_provider.dart';
+import '../widgets/common/custom_button.dart';
+import '../constants/colors.dart';
+import '../constants/text_styles.dart';
+import 'edit_profile_screen.dart';
+import '../widgets/profile_screen/bottom_curve_clipper.dart';
 
-class ProfileScreen extends StatefulWidget {
-  final String name;
-  final String phone;
-  final String address;
-  final String email;
-  final String major;
-  final File? imageFile;
+class ProfileScreen extends StatelessWidget {
+  final String userId;
+  final UserProfile userProfile;
 
-  const ProfileScreen({
-    super.key,
-    required this.name,
-    required this.phone,
-    required this.address,
-    required this.email,
-    required this.major,
-    this.imageFile,
-  });
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  late String name, phone, address, email, major;
-
-  @override
-  void initState() {
-    super.initState();
-    name = widget.name;
-    phone = widget.phone;
-    address = widget.address;
-    email = widget.email;
-    major = widget.major;
-  }
+  const ProfileScreen({super.key, required this.userId, required this.userProfile});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: whiteColor,
-      body: Column(
-        children: [
-          Container(
-            height: 120,
-            width: double.infinity,
-            color: darkTeal,
-            alignment: Alignment.center,
-            child: Text(
-            'profile',
-              style: sectionTitleStyle.copyWith(color: Colors.white),
-            ),
-          ),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              ClipPath(
-                clipper: ArcClipper(),
-                child: Container(
-                  height: 370,
-                  color: darkTeal,
-                ),
-              ),
-              Column(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ProfileViewModel()..loadUserProfile(userId)),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: Scaffold(
+        backgroundColor: Colors.grey.shade100,
+        appBar: AppBar(
+          backgroundColor: deepForestGreen,
+          centerTitle: true,
+          title: const Text('Profile', style: TextStyle(color: Colors.white)),
+          elevation: 0,
+        ),
+        body: Consumer2<ProfileViewModel, UserProvider>(
+          builder: (context, profileVM, userProvider, _) {
+            if (profileVM.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            final userProfile = profileVM.userProfile;
+            userProvider.setUserProfile(userProfile);
+            print('Profile image URL in ProfileScreen: ${userProfile.imagePath}');
+
+            return SingleChildScrollView(
+              child: Column(
                 children: [
-                  const SizedBox(height: 20),
-                  ProfileAvatar(
-                    imageFile: widget.imageFile,
-                    size: 175,
+                  ClipPath(
+                    clipper: BottomCurveClipper(),
+                    child: Container(
+                      color: deepForestGreen,
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 50),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 60,
+                            backgroundColor: Colors.grey.shade300,
+                            backgroundImage: userProfile.imagePath.isNotEmpty
+                                ? (userProfile.imagePath.startsWith('http')
+                                ? NetworkImage(userProfile.imagePath)
+                                : FileImage(File(userProfile.imagePath)) as ImageProvider)
+                                : null,
+                            child: userProfile.imagePath.isEmpty
+                                ? const Icon(Icons.person, size: 60, color: whiteColor)
+                                : null,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(userProfile.name,
+                              style: sectionTitleStyle.copyWith(color: Colors.white)),
+                          const SizedBox(height: 4),
+                          Text(userProfile.major,
+                              style: bodyTextStyle.copyWith(color: Colors.white70)),
+                          const SizedBox(height: 4),
+                          Text(userProfile.email,
+                              style: bodyTextStyle.copyWith(color: Colors.white70)),
+                          Text(userProfile.phone,
+                              style: bodyTextStyle.copyWith(color: Colors.white70)),
+                        ],
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 10),
-                  TextProfile(
-                    name: name,
-                    major: major,
-                    email: email,
-                    phone: phone,
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        CustomButton(
+                          text: 'Edit Profile',
+                          onPressed: () async {
+                            final updatedProfile = await Navigator.push<UserProfile>(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => EditProfileScreen(
+                                  userProfile: userProfile,
+                                  userId: userId,
+                                ),
+                              ),
+                            );
+                            if (updatedProfile != null) {
+                              profileVM.setUserProfile(updatedProfile);
+                              userProvider.setUserProfile(updatedProfile);
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        CustomButton(
+                          text: 'Logout',
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
-          const SizedBox(height: 30),
-          Column(
-            children: [
-              CustomProfileButton(
-                label: 'Edit Profile',
-                icon: Icons.edit,
-                onPressed: () async {
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const EditProfileScreen(),
-                    ),
-                  );
-
-                  if (result != null && result is Map<String, String>) {
-                    setState(() {
-                      name = result['name'] ?? name;
-                      phone = result['phone'] ?? phone;
-                      address = result['address'] ?? address;
-                      email = result['email'] ?? email;
-                      major = result['major'] ?? major;
-                    });
-                  }
-                },
-              ),
-              const SizedBox(height: 15),
-              CustomProfileButton(
-                label: 'Logout',
-                icon: Icons.logout,
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/welcome',
-                        (route) => false, // يمسح كل الراوتات السابقة
-                  );
-                },
-
-              ),
-            ],
-          )
-        ],
+            );
+          },
+        ),
       ),
     );
   }
 }
-
-
