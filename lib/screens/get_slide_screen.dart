@@ -1,11 +1,15 @@
+// lib/screens/get_slide_screen.dart
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../constants/colors.dart';
+import '../constants/text_styles.dart';
+import '../view_models/get_slide_viewmodel.dart';
+import '../widgets/common/custom_button.dart';
+import '../widgets/get_screen/tappable_image.dart';
 
 class GetSlideScreen extends StatelessWidget {
-  final String name;
-  final String email;
-  final String slideTitle;
-  final String description;
+  final String name, email, slideTitle, description;
   final File? imageFile;
 
   const GetSlideScreen({
@@ -17,51 +21,74 @@ class GetSlideScreen extends StatelessWidget {
     this.imageFile,
   });
 
+  Widget buildInfoRow(BuildContext context, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 4),
+          Text(value, style: const TextStyle(fontSize: 18)),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Slide Details'),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (imageFile != null)
-                Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.file(imageFile!, height: 150, width: 150, fit: BoxFit.cover),
+    return ChangeNotifierProvider(
+      create: (_) => GetSlideViewModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Get Slide',
+            style: sectionTitleStyle.copyWith(color: deepForestGreen),
+          ),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
                   ),
-                )
-              else
-                const SizedBox(height: 150),
-
-              const SizedBox(height: 16),
-
-
-              Text('Name:', style: Theme.of(context).textTheme.titleMedium),
-              Text(name, style: const TextStyle(fontSize: 18)),
-
-              const SizedBox(height: 12),
-
-              Text('Email:', style: Theme.of(context).textTheme.titleMedium),
-              Text(email, style: const TextStyle(fontSize: 18)),
-
-              const SizedBox(height: 12),
-
-              Text('Slide Title:', style: Theme.of(context).textTheme.titleMedium),
-              Text(slideTitle, style: const TextStyle(fontSize: 18)),
-
-              const SizedBox(height: 12),
-
-              Text('Description:', style: Theme.of(context).textTheme.titleMedium),
-              Text(description, style: const TextStyle(fontSize: 18)),
-
-            ],
+                ],
+                border: Border.all(color: Colors.grey.shade300),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (imageFile != null)
+                    Center(child: TappableImage(imageFile: imageFile!)),
+                  const SizedBox(height: 16),
+                  buildInfoRow(context, 'Name:', name),
+                  const Divider(height: 20, thickness: 1),
+                  buildInfoRow(context, 'Email:', email),
+                  const Divider(height: 20, thickness: 1),
+                  buildInfoRow(context, 'Slide Title:', slideTitle),
+                  const Divider(height: 20, thickness: 1),
+                  buildInfoRow(context, 'Description:', description),
+                  const SizedBox(height: 24),
+                  Consumer<GetSlideViewModel>(
+                    builder: (context, viewModel, _) {
+                      return CustomButton(
+                        text: 'Borrowing slides',
+                        onPressed: () => viewModel.onBorrowSlidePressed(context),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

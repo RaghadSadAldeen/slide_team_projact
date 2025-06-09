@@ -2,6 +2,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:slide_team_project/screens/college_major.dart';
+ import 'package:slide_team_project/constants/colors.dart';
+
 
 class CollegeCard extends StatelessWidget {
   final String imageUrl;
@@ -22,7 +24,7 @@ class CollegeCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFFA3C1A8),
+          color: sageGreen,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(

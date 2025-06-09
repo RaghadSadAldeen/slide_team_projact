@@ -1,7 +1,11 @@
+import 'package:flutter/material.dart' as flutter;
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:slide_team_project/screens/favorite_materials.dart';
+import 'package:slide_team_project/screens/subject_content_screen.dart';
 import 'package:slide_team_project/widgets/app_bar.dart';
 import 'package:slide_team_project/constants/bottom_nav_bar.dart';
+import 'package:slide_team_project/view_models/favorites_view_model.dart';
 
 class MaterialsPage extends StatefulWidget {
   final String majorName;
@@ -12,39 +16,36 @@ class MaterialsPage extends StatefulWidget {
     required this.majorName,
     required this.materials,
   });
-
   @override
   State<MaterialsPage> createState() => _MaterialsPageState();
 }
 
 class _MaterialsPageState extends State<MaterialsPage> {
   int _selectedIndex = 0;
+  final FavoritesViewModel _viewModel = FavoritesViewModel();
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
 
-    // Example navigation logic (you should replace with your actual screens)
     switch (index) {
       case 0:
         Navigator.popUntil(context, (route) => route.isFirst);
         break;
       case 1:
-      // Navigate to NotificationsPage
         break;
       case 2:
-      // Navigate to AddPage
         break;
       case 3:
-      // Navigate to ProfilePage
         break;
     }
   }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final userId = FirebaseAuth.instance.currentUser?.uid ?? "guest_user";
+
+    return flutter.Scaffold(
       appBar: CustomAppBar(
         title: widget.majorName,
         showTitle: true,
@@ -97,20 +98,44 @@ class _MaterialsPageState extends State<MaterialsPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.menu_book),
-                            const SizedBox(width: 10),
-                            Text(
-                              material['title']!,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SubjectContentScreen(
+                                  materialTitle: material['title']!,
+                                ),
                               ),
-                            ),
-                          ],
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              const Icon(Icons.menu_book),
+                              const SizedBox(width: 10),
+                              Text(
+                                material['title']!,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        const Icon(Icons.favorite_border),
+                        IconButton(
+                          icon: const Icon(Icons.favorite_border),
+                          onPressed: () async {
+                            await _viewModel.addFavorite(
+                              name: material['title']!,
+                              userId: userId,
+                              major: widget.majorName,
+                            );
+                            flutter.ScaffoldMessenger.of(context).showSnackBar(
+                              const flutter.SnackBar(content: Text('Added to favorites')),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   );

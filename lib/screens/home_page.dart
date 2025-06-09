@@ -3,14 +3,17 @@ import 'package:slide_team_project/datasource/data.dart';
 import 'package:slide_team_project/models/college.dart';
 import 'package:slide_team_project/screens/college_major.dart';
 // import 'package:fluttertest/widgets/college_card.dart';
-import 'package:slide_team_project/constants//bottom_nav_bar.dart';
+//import 'package:slide_team_project/constants//bottom_nav_bar.dart';
 import 'package:slide_team_project/widgets/app_bar.dart';
+import 'package:slide_team_project/constants/colors.dart';
 
+import '../constants/bottom_nav_bar.dart';
 import '../widgets/college_card.dart';
 
 class CollegeGridScreen extends StatefulWidget {
   const CollegeGridScreen({super.key});
-
+  //final String userId;
+ // const CollegeGridScreen({super.key, required this.userId});
   @override
   State<CollegeGridScreen> createState() => _CollegeGridScreenState();
 }
@@ -61,10 +64,6 @@ class _CollegeGridScreenState extends State<CollegeGridScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
-      ),
       appBar: const CustomAppBar(
         title: 'University Colleges',
         showLeading: false,
@@ -87,7 +86,7 @@ class _CollegeGridScreenState extends State<CollegeGridScreen> {
                   prefixIcon: const Icon(Icons.search),
                   hintText: 'Search colleges...',
                   filled: true,
-                  fillColor: const Color(0xFFA3C1A8),
+                  fillColor:  sageGreen,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
