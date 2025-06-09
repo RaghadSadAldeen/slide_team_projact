@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
+
 import '../models/user_profile.dart';
 import '../view_models/profile_view_model.dart';
 import '../view_models/user_provider.dart';
@@ -11,16 +13,32 @@ import 'edit_profile_screen.dart';
 import '../widgets/profile_screen/bottom_curve_clipper.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final String userId;
   final UserProfile userProfile;
 
-  const ProfileScreen({super.key, required this.userId, required this.userProfile});
+  const ProfileScreen({super.key, required this.userProfile});
 
   @override
   Widget build(BuildContext context) {
+    final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+
+    if (userId.isEmpty) {
+      // مثلاً عرض رسالة خطأ أو إعادة توجيه لشاشة تسجيل الدخول
+      return Scaffold(
+        body: Center(
+          child: Text('User not logged in', style: TextStyle(color: Colors.red)),
+        ),
+      );
+    }
+
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ProfileViewModel()..loadUserProfile(userId)),
+        ChangeNotifierProvider(
+          create: (_) {
+            final vm = ProfileViewModel();
+            vm.setUserProfile(userProfile); // نمرر الملف الموجود
+            return vm;
+          },
+        ),
         ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: Scaffold(
@@ -33,13 +51,8 @@ class ProfileScreen extends StatelessWidget {
         ),
         body: Consumer2<ProfileViewModel, UserProvider>(
           builder: (context, profileVM, userProvider, _) {
-            if (profileVM.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-
             final userProfile = profileVM.userProfile;
             userProvider.setUserProfile(userProfile);
-            print('Profile image URL in ProfileScreen: ${userProfile.imagePath}');
 
             return SingleChildScrollView(
               child: Column(
@@ -65,16 +78,12 @@ class ProfileScreen extends StatelessWidget {
                                 : null,
                           ),
                           const SizedBox(height: 10),
-                          Text(userProfile.name,
-                              style: sectionTitleStyle.copyWith(color: Colors.white)),
+                          Text(userProfile.name, style: sectionTitleStyle.copyWith(color: Colors.white)),
                           const SizedBox(height: 4),
-                          Text(userProfile.major,
-                              style: bodyTextStyle.copyWith(color: Colors.white70)),
+                          Text(userProfile.major, style: bodyTextStyle.copyWith(color: Colors.white70)),
                           const SizedBox(height: 4),
-                          Text(userProfile.email,
-                              style: bodyTextStyle.copyWith(color: Colors.white70)),
-                          Text(userProfile.phone,
-                              style: bodyTextStyle.copyWith(color: Colors.white70)),
+                          Text(userProfile.email, style: bodyTextStyle.copyWith(color: Colors.white70)),
+                          Text(userProfile.phone, style: bodyTextStyle.copyWith(color: Colors.white70)),
                         ],
                       ),
                     ),
@@ -92,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (_) => EditProfileScreen(
                                   userProfile: userProfile,
-                                  userId: userId,
+                                  userId: userId, // نمرر userId الصحيح
                                 ),
                               ),
                             );

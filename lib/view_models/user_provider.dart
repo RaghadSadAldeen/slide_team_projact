@@ -14,6 +14,7 @@ class UserProvider extends ChangeNotifier {
 
   void updateImagePath(String newPath) {
     _userProfile = UserProfile(
+      userId: _userProfile.userId,
       name: _userProfile.name,
       email: _userProfile.email,
       phone: _userProfile.phone,

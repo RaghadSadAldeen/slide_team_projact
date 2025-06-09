@@ -15,6 +15,13 @@ class ProfileViewModel extends ChangeNotifier {
   bool isLoading = true;
 
   Future<void> loadUserProfile(String userId) async {
+    if (userId.isEmpty) {
+      _userProfile = UserProfile.empty();
+      isLoading = false;
+      notifyListeners();
+      return;
+    }
+
     isLoading = true;
     notifyListeners();
 
@@ -25,7 +32,6 @@ class ProfileViewModel extends ChangeNotifier {
         final data = doc.data()!;
         String imageUrl = data['imagePath'] ?? '';
 
-        // تحميل رابط الصورة من Firebase Storage إذا كان مسار فقط
         if (imageUrl.isNotEmpty && !imageUrl.startsWith('http')) {
           imageUrl = await _storage.ref(imageUrl).getDownloadURL();
         }

@@ -1,4 +1,5 @@
 class UserProfile {
+  final String userId;
   final String name;
   final String email;
   final String phone;
@@ -7,6 +8,7 @@ class UserProfile {
   final String imagePath;
 
   UserProfile({
+    required this.userId,
     required this.name,
     required this.email,
     required this.phone,
@@ -17,6 +19,7 @@ class UserProfile {
 
   factory UserProfile.empty() {
     return UserProfile(
+      userId: '',
       name: '',
       email: '',
       phone: '',
@@ -28,6 +31,7 @@ class UserProfile {
 
   Map<String, dynamic> toMap() {
     return {
+      'userId': userId,
       'name': name,
       'email': email,
       'phone': phone,
@@ -39,6 +43,7 @@ class UserProfile {
 
   factory UserProfile.fromMap(Map<String, dynamic> map) {
     return UserProfile(
+      userId: map['userId'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       phone: map['phone'] ?? '',

@@ -6,8 +6,8 @@ class LoginViewModel extends ChangeNotifier {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  Future<void> login(BuildContext context) async {
-    if (!formKey.currentState!.validate()) return;
+  Future<bool> login() async {
+    if (!formKey.currentState!.validate()) return false;
 
     final email = emailController.text.trim();
     final password = passwordController.text;
@@ -17,11 +17,7 @@ class LoginViewModel extends ChangeNotifier {
         email: email,
         password: password,
       );
-
-      if (context.mounted) {
-        Navigator.pushReplacementNamed(context, '/CollegeGridScreen');
-      }
-
+      return true; // نجاح تسجيل الدخول
     } on FirebaseAuthException catch (e) {
       String errorMessage;
 
@@ -39,13 +35,18 @@ class LoginViewModel extends ChangeNotifier {
           errorMessage = 'Login failed: Invalid email or password';
       }
 
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage)),
-        );
-      }
+      // لا تعرض رسالة الخطأ هنا (الـ View هو اللي يعرضها)
+      notifyListeners();
+
+      // بدلها، يمكنك حفظ رسالة الخطأ لو تحب
+      _errorMessage = errorMessage;
+
+      return false; // فشل تسجيل الدخول
     }
   }
+
+  String _errorMessage = '';
+  String get errorMessage => _errorMessage;
 
   void disposeControllers() {
     emailController.dispose();
