@@ -11,7 +11,7 @@ class TappableImage extends StatelessWidget {
     Key? key,
     required this.imageFile,
     this.height = 150,
-    this.width = 150,
+    this.width = 190,
     this.borderRadius = const BorderRadius.all(Radius.circular(12)),
   }) : super(key: key);
 
