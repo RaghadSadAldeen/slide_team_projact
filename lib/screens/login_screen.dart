@@ -69,8 +69,19 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         CustomButton(
                           text: 'Sign In',
-                          onPressed: () => viewModel.login(context),
+                          onPressed: () async {
+                            final success = await viewModel.login();
+                            if (success) {
+                              Navigator.pushReplacementNamed(context, '/main');
+
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(viewModel.errorMessage)),
+                              );
+                            }
+                          },
                         ),
+
                       ],
                     ),
                   ),

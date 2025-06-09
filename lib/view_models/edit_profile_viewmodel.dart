@@ -35,8 +35,13 @@ class EditProfileViewModel extends ChangeNotifier {
   }
 
   Future<String?> saveProfile() async {
+    if (userId.isEmpty) {
+      return 'User ID is empty. Cannot save profile.';
+    }
+
     try {
       _userProfile = UserProfile(
+        userId: userId,
         name: nameController.text,
         phone: phoneController.text,
         address: addressController.text,
@@ -46,6 +51,7 @@ class EditProfileViewModel extends ChangeNotifier {
       );
 
       await _firestore.collection('users').doc(userId).set({
+        'userId': userId,
         'name': _userProfile.name,
         'phone': _userProfile.phone,
         'address': _userProfile.address,
