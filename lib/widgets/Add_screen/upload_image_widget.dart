@@ -15,6 +15,7 @@ class UploadImageWidget extends StatelessWidget {
   Future<void> _pickImage(BuildContext context) async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
+
       onImageSelected(File(pickedFile.path));
     }
   }

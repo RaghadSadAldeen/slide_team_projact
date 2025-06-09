@@ -11,6 +11,7 @@ class SlideFormFields extends StatelessWidget {
     required this.nameController,
     required this.emailController,
     required this.slideTitleController,
+
     required this.descriptionController,
   });
 

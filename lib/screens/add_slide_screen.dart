@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:slide_app/widgets/Add_screen/slide_form_fields.dart';
-import 'package:slide_app/widgets/Add_screen/upload_image_widget.dart';
-import 'package:slide_app/widgets/Add_screen/save_button.dart';
-import 'package:slide_app/widgets/profile_screen/profile_avatar.dart';
+import 'package:slide_team_project/widgets/Add_screen/slide_form_fields.dart';
+import 'package:slide_team_project/widgets/Add_screen/upload_image_widget.dart';
+import 'package:slide_team_project/widgets/Add_screen/save_button.dart';
+import 'package:slide_team_project/widgets/profile_screen/profile_avatar.dart';
 import '../constants/text_styles.dart';
 
 class AddSlideScreen extends StatefulWidget {
@@ -15,10 +15,12 @@ class AddSlideScreen extends StatefulWidget {
   State<AddSlideScreen> createState() => _AddSlideScreenState();
 }
 
+
 class _AddSlideScreenState extends State<AddSlideScreen> {
   File? uploadedSlideImage;
 
   final nameController = TextEditingController();
+
   final emailController = TextEditingController();
   final slideTitleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -83,7 +85,7 @@ class _AddSlideScreenState extends State<AddSlideScreen> {
                 emailController: emailController,
                 slideTitleController: slideTitleController,
                 descriptionController: descriptionController,
-                selectedImage: uploadedSlideImage, // فقط صورة الـ Slide
+                selectedImage: uploadedSlideImage,
               ),
             ],
           ),
