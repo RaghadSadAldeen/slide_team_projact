@@ -5,6 +5,7 @@ import 'package:slide_team_project/screens/college_major.dart';
 // import 'package:fluttertest/widgets/college_card.dart';
 //import 'package:slide_team_project/constants//bottom_nav_bar.dart';
 import 'package:slide_team_project/widgets/app_bar.dart';
+import 'package:slide_team_project/constants/colors.dart';
 
 import '../constants/bottom_nav_bar.dart';
 import '../widgets/college_card.dart';
@@ -89,7 +90,7 @@ class _CollegeGridScreenState extends State<CollegeGridScreen> {
                   prefixIcon: const Icon(Icons.search),
                   hintText: 'Search colleges...',
                   filled: true,
-                  fillColor: const Color(0xFFA3C1A8),
+                  fillColor:  sageGreen,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,

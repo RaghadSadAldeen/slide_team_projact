@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slide_team_project/constants/colors.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -10,14 +11,14 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: const BoxDecoration(color: Color(0xFF1D3B2A)),
+            decoration: const BoxDecoration(color: deepForestGreen),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.white70,
-                  child: Icon(Icons.person, size: 40, color: Color(0xFF1D3B2A)),
+                  child: Icon(Icons.person, size: 40, color:deepForestGreen),
                 ),
                 const SizedBox(height: 10),
                 const Text(

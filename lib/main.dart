@@ -27,7 +27,9 @@ class MyApp extends StatelessWidget {
         '/welcome': (context) => const WelcomeScreen(),
         '/login': (context) => const LoginScreen(),
         '/create-account': (context) => const CreateAccountScreen(),
+        '/main': (context) => const MainNavigation(), // ← لازم تكون موجودة عشان التنقل ما يضرب
       },
     );
   }
 }
+
