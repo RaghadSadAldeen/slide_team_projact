@@ -17,7 +17,7 @@ class LoginViewModel extends ChangeNotifier {
         email: email,
         password: password,
       );
-      return true; // نجاح تسجيل الدخول
+      return true;
     } on FirebaseAuthException catch (e) {
       String errorMessage;
 
@@ -35,13 +35,11 @@ class LoginViewModel extends ChangeNotifier {
           errorMessage = 'Login failed: Invalid email or password';
       }
 
-      // لا تعرض رسالة الخطأ هنا (الـ View هو اللي يعرضها)
       notifyListeners();
 
-      // بدلها، يمكنك حفظ رسالة الخطأ لو تحب
       _errorMessage = errorMessage;
 
-      return false; // فشل تسجيل الدخول
+      return false;
     }
   }
 
