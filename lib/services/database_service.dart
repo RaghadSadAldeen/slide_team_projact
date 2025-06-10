@@ -8,16 +8,15 @@ class DatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  /// Uploads an image to Firebase Storage and returns its download URL.
   Future<String> uploadImage(File imageFile) async {
-    print("🔵 uploadImage() called with path: ${imageFile.path}");
+    print("uploadImage() called with path: ${imageFile.path}");
 
     if (!await imageFile.exists()) {
-      print("❌ The file does NOT exist at path: ${imageFile.path}");
+      print("The file does NOT exist at path: ${imageFile.path}");
       throw Exception("Image file does not exist.");
     }
     try {
-      print("📤 Uploading image...");
+      print("Uploading image...");
       final fileExtension = path.extension(imageFile.path); // e.g. .jpg
 
       final fileName = '${DateTime.now().millisecondsSinceEpoch}$fileExtension';
@@ -27,27 +26,26 @@ class DatabaseService {
 
 
       final uploadTask = await storageRef.putFile(imageFile);
-      print("✅ Image uploaded successfully");
+      print("Image uploaded successfully");
 
-      await Future.delayed(Duration(seconds: 1)); // بعد putFile
+      await Future.delayed(Duration(seconds: 1));
       final url = await uploadTask.ref.getDownloadURL();
-      print("🔗 Image URL: $url");
+      print("Image URL: $url");
 
       return url;
     } catch (e) {
-      print("❌ Failed to upload image: $e");
+      print("Failed to upload image: $e");
       rethrow;
     }
   }
 
-  /// Saves slide data to Firestore in the "slides" collection.
   Future<void> saveSlide(SlideModel slide) async {
     try {
-      print("📝 Saving slide data to Firestore: ${slide.toJson()}");
+      print("Saving slide data to Firestore: ${slide.toJson()}");
       await _firestore.collection('slides').add(slide.toJson());
-      print("✅ Slide successfully saved to Firestore.");
+      print("Slide successfully saved to Firestore.");
     } catch (e) {
-      print("❌ Firestore save error: $e");
+      print("Firestore save error: $e");
       rethrow;
     }
   }

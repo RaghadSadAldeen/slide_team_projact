@@ -22,4 +22,7 @@ class Chat {
       timestamp: (data['timestamp'] as Timestamp?)?.toDate(),
     );
   }
+
+  String get currentUserEmail => users.first;
+  String get otherUserEmail => users.last;
 }

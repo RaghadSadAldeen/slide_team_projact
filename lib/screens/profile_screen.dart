@@ -22,7 +22,6 @@ class ProfileScreen extends StatelessWidget {
     final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
 
     if (userId.isEmpty) {
-      // مثلاً عرض رسالة خطأ أو إعادة توجيه لشاشة تسجيل الدخول
       return Scaffold(
         body: Center(
           child: Text('User not logged in', style: TextStyle(color: Colors.red)),
@@ -35,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) {
             final vm = ProfileViewModel();
-            vm.setUserProfile(userProfile); // نمرر الملف الموجود
+            vm.setUserProfile(userProfile);
             return vm;
           },
         ),
@@ -101,7 +100,7 @@ class ProfileScreen extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (_) => EditProfileScreen(
                                   userProfile: userProfile,
-                                  userId: userId, // نمرر userId الصحيح
+                                  userId: userId,
                                 ),
                               ),
                             );

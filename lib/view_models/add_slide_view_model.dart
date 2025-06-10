@@ -27,10 +27,10 @@ class AddSlideViewModel extends ChangeNotifier {
         selectedImage != null;
   }
   Future<bool> saveSlideToFirebase() async {
-    print("📤 Starting to save slide...");
+    print("Starting to save slide...");
 
     if (!isFormValid) {
-      print("❌ Form is invalid");
+      print("Form is invalid");
       return false;
     }
 

@@ -17,32 +17,33 @@ class ChatViewModel {
   }) async {
     if (text.trim().isEmpty) return;
 
-    // إضافة الرسالة إلى الدردشة
+    final now = DateTime.now();
+
     await _db.collection('chats').doc(chatId).collection('messages').add({
       'text': text.trim(),
       'sender': user?.email,
-      'time': FieldValue.serverTimestamp(),
+      'time': now,
     });
 
-    // تحديث آخر رسالة وتاريخها في الدردشة
     await _db.collection('chats').doc(chatId).update({
       'lastMessage': text.trim(),
       'timestamp': FieldValue.serverTimestamp(),
     });
 
-    // جلب توكن FCM للمستلم من Firestore
     final userDoc = await _db.collection('users').doc(receiverUid).get();
     final receiverFcmToken = userDoc.data()?['fcmToken'];
 
     if (receiverFcmToken != null) {
       await sendPushMessage(receiverFcmToken, text, user?.email ?? 'Someone', chatId);
     }
+
+    print('Message sent to $chatId');
   }
 
-  // دالة إرسال إشعار عبر FCM API
+
   Future<void> sendPushMessage(String token, String message, String senderEmail, String chatId) async {
     try {
-      const serverKey = '3726596232'; // ضع هنا مفتاح السيرفر الخاص بك من Firebase Console
+      const serverKey = '3726596232';
 
       final data = {
         'to': token,
