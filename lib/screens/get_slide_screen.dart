@@ -7,6 +7,8 @@ import '../constants/text_styles.dart';
 import '../view_models/get_slide_viewmodel.dart';
 import '../widgets/common/custom_button.dart';
 import '../widgets/get_screen/tappable_image.dart';
+import 'chat_screen.dart';
+import 'materials_screen.dart';
 
 class GetSlideScreen extends StatelessWidget {
   final String name, email, slideTitle, description;
@@ -82,8 +84,14 @@ class GetSlideScreen extends StatelessWidget {
                     builder: (context, viewModel, _) {
                       return CustomButton(
                         text: 'Borrowing slides',
-                        onPressed: () => viewModel.onBorrowSlidePressed(context),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SubjectContentScreen(materialTitle: '',)), // عدل حسب اسم صفحة الشاتينج
+                          );
+                        },
                       );
+
                     },
                   ),
                 ],

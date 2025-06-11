@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:slide_team_project/datasource/data.dart';
 import 'package:slide_team_project/models/college.dart';
-import 'package:slide_team_project/constants/bottom_nav_bar.dart';
+import '../constants/bottom_nav_bar.dart'; // تعديل الاستيراد لمسار نسبي
+import 'main_navigation.dart'; // استيراد شاشة التنقل الرئيسية
 import 'package:slide_team_project/widgets/major_card.dart';
 import 'package:slide_team_project/widgets/app_bar.dart';
 import 'materials_page.dart';
@@ -16,7 +17,7 @@ class CollegeMajorsScreen extends StatefulWidget {
 }
 
 class _CollegeMajorsScreenState extends State<CollegeMajorsScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 0; // Default to home
 
   late final College? selectedCollege;
 
@@ -32,6 +33,13 @@ class _CollegeMajorsScreenState extends State<CollegeMajorsScreen> {
     setState(() {
       _selectedIndex = index;
     });
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainNavigation(initialIndex: index),
+      ),
+    );
   }
 
   @override
@@ -76,11 +84,9 @@ class _CollegeMajorsScreenState extends State<CollegeMajorsScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder:
-                                (context) => MaterialsPage(
+                            builder: (context) => MaterialsPage(
                               majorName: major.name,
-                              materials:
-                              major.materials
+                              materials: major.materials
                                   .map((m) => {'title': m.name})
                                   .toList(),
                             ),

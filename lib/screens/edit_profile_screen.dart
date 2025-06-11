@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../constants/colors.dart';
 import '../constants/text_styles.dart';
+import '../constants/bottom_nav_bar.dart';   // إضافة استيراد BottomNavBar
+import 'main_navigation.dart';               // إضافة استيراد MainNavigation
 import '../models/user_profile.dart';
 import '../view_models/edit_profile_viewmodel.dart';
 import '../widgets/common/custom_button.dart';
@@ -41,6 +43,20 @@ class _EditProfileBody extends StatefulWidget {
 
 class _EditProfileBodyState extends State<_EditProfileBody> {
   final _formKey = GlobalKey<FormState>();
+  int _selectedIndex = 0; // Default to home
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainNavigation(initialIndex: index),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +139,10 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }

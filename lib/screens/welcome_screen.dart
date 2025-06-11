@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:slide_team_project/widgets/my_button.dart';
-import 'package:slide_team_project/constants/colors.dart';
+import 'package:slide_team_project/widgets/common/custom_button.dart';
 import 'package:slide_team_project/constants/text_styles.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+  const WelcomeScreen({super.key});
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
@@ -34,16 +33,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ],
             ),
             const SizedBox(height: 30),
-            MyButton(
-              color: sageGreen,
-              title: 'Log In',
+            CustomButton(
+              text: 'Log In',
               onPressed: () {
                 Navigator.pushNamed(context, '/login');
               },
             ),
-            MyButton(
-              color: sageGreen,
-              title: 'Sign Up',
+            const SizedBox(height: 12),
+            CustomButton(
+              text: 'Sign Up',
               onPressed: () {
                 Navigator.pushNamed(context, '/create-account');
               },
