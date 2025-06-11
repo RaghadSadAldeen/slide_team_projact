@@ -3,41 +3,53 @@ import '../models/message_model.dart';
 import '../constants/colors.dart';
 
 class MessageLine extends StatelessWidget {
-  final Message msg;
+  const MessageLine({
+    required this.message,
+    required this.isMe,
+    Key? key,
+  }) : super(key: key);
+
+  final Message message;
   final bool isMe;
-  const MessageLine({super.key, required this.msg, required this.isMe});
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(10),
-    child: Column(
-      crossAxisAlignment:
-      isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-      children: [
-        Text(msg.sender, style: const TextStyle(fontSize: 12)),
-        Material(
-          color: isMe ? deepForestGreen : Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft : const Radius.circular(30),
-            topRight: const Radius.circular(30),
-            bottomLeft :
-            isMe ? const Radius.circular(30) : Radius.zero,
-            bottomRight:
-            isMe ? Radius.zero : const Radius.circular(30),
-          ),
-          elevation: 4,
-          child: Padding(
-            padding:
-            const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-            child: Text(
-              msg.text,
-              style: TextStyle(
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment:
+        isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Text(message.sender,
+              style: const TextStyle(fontSize: 12, color: Colors.black45)),
+          Material(
+            elevation: 5,
+            borderRadius: isMe
+                ? const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+            )
+                : const BorderRadius.only(
+              topRight: Radius.circular(30),
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+            ),
+            color: isMe ? deepForestGreen : Colors.white,
+            child: Padding(
+              padding:
+              const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Text(
+                message.text,
+                style: TextStyle(
+                  fontSize: 15,
                   color: isMe ? Colors.white : Colors.black,
-                  fontSize: 15),
+                ),
+              ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }

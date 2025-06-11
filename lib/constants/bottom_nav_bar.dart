@@ -32,6 +32,10 @@ class BottomNavBar extends StatelessWidget {
           label: 'Notifications',
         ),
         BottomNavigationBarItem(
+          icon: Icon(Icons.chat, size: 28),
+          label: 'Notifications',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.add_circle_outline, size: 32),
           label: 'Add',
         ),
