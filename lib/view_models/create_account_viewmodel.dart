@@ -20,16 +20,18 @@ class CreateAccountViewModel extends ChangeNotifier {
     try {
       final user = await _authService.registerUser(name, email, password);
 
-      if (user != null) {
+      if (context.mounted && user != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Account created for ${user.email}")),
         );
         Navigator.of(context).pushReplacementNamed('/login');
       }
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("🚫 $error")),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("$error")),
+        );
+      }
     }
   }
 
