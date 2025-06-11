@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../constants/colors.dart';
 import '../view_models/materials_view_model.dart';
+import '../constants/bottom_nav_bar.dart';
+import 'main_navigation.dart';
 
 class SubjectContentScreen extends StatefulWidget {
   final String materialTitle;
@@ -13,11 +16,26 @@ class SubjectContentScreen extends StatefulWidget {
 }
 
 class _SubjectContentScreenState extends State<SubjectContentScreen> {
+  int _selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
     final viewModel = Provider.of<MaterialsViewModel>(context, listen: false);
     viewModel.fetchMaterials();
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainNavigation(initialIndex: index),
+      ),
+    );
   }
 
   @override
@@ -40,7 +58,7 @@ class _SubjectContentScreenState extends State<SubjectContentScreen> {
           itemBuilder: (context, index) {
             final material = viewModel.materials[index];
             return MaterialButton(
-              color: Colors.green[200],
+              color: sageGreen,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
               onPressed: () async {
@@ -62,6 +80,10 @@ class _SubjectContentScreenState extends State<SubjectContentScreen> {
             );
           },
         ),
+      ),
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }

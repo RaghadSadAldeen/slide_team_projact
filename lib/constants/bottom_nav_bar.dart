@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
+import '../constants/colors.dart';
+
 class BottomNavBar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onItemTapped;
@@ -14,7 +15,7 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: selectedIndex,
-      onTap: onItemTapped,
+      onTap: (index) => onItemTapped(index),
       type: BottomNavigationBarType.fixed,
       backgroundColor: const Color(0xFF1D3B2A),
       selectedItemColor: whiteColor,
@@ -23,19 +24,19 @@ class BottomNavBar extends StatelessWidget {
       showUnselectedLabels: false,
       items: const [
         BottomNavigationBarItem(
-          icon: Center(child: Icon(Icons.home, size: 30)),
+          icon: Icon(Icons.home, size: 30),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Center(child: Icon(Icons.notifications_none, size: 28)),
+          icon: Icon(Icons.notifications_none, size: 28),
           label: 'Notifications',
         ),
         BottomNavigationBarItem(
-          icon: Center(child: Icon(Icons.add_circle_outline, size: 32)),
+          icon: Icon(Icons.add_circle_outline, size: 32),
           label: 'Add',
         ),
         BottomNavigationBarItem(
-          icon: Center(child: Icon(Icons.person_outline, size: 28)),
+          icon: Icon(Icons.person_outline, size: 28),
           label: 'Profile',
         ),
       ],

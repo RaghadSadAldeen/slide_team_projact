@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:slide_team_project/screens/profile_screen.dart';
 import '../constants/bottom_nav_bar.dart';
+import '../view_models/user_provider.dart';
 import 'add_slide_screen.dart';
 import 'chat_screen.dart';
 import 'home_page.dart';
+import 'notifications_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   final int initialIndex;
+
   const MainNavigation({super.key, this.initialIndex = 0});
 
   @override
@@ -31,25 +35,24 @@ class _MainNavigationState extends State<MainNavigation> {
   }
 
   Widget _getScreen(int index) {
+    final userProfile = Provider.of<UserProvider>(context).userProfile;
+
     switch (index) {
       case 0:
         return CollegeGridScreen();
       case 1:
-        return ChatScreen();
+        return NotificationsScreen();
       case 2:
         return AddSlideScreen();
       case 3:
         return ProfileScreen(
-          name: 'User Name',
-          phone: '1234567890',
-          address: 'City, Country',
-          email: 'user@example.com',
-          major: 'Computer Science',
+          userProfile: userProfile,
         );
       default:
         return const Center(child: Text("Invalid page"));
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +60,8 @@ class _MainNavigationState extends State<MainNavigation> {
       bottomNavigationBar: BottomNavBar(
         selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
+        // ممكن تمرر userProfile إذا احتجت صفحة Profile تستخدمها داخل BottomNavBar
+        // لكن هنا مش ضروري لأن التنقل في MainNavigation
       ),
     );
   }
