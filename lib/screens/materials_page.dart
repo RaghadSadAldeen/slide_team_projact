@@ -6,6 +6,7 @@ import 'package:slide_team_project/screens/subject_content_screen.dart';
 import 'package:slide_team_project/widgets/app_bar.dart';
 import 'package:slide_team_project/constants/bottom_nav_bar.dart';
 import 'package:slide_team_project/view_models/favorites_view_model.dart';
+import 'main_navigation.dart';
 
 
 class MaterialsPage extends StatefulWidget {
@@ -30,17 +31,12 @@ class _MaterialsPageState extends State<MaterialsPage> {
       _selectedIndex = index;
     });
 
-    switch (index) {
-      case 0:
-        Navigator.popUntil(context, (route) => route.isFirst);
-        break;
-      case 1:
-        break;
-      case 2:
-        break;
-      case 3:
-        break;
-    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainNavigation(initialIndex: index),
+      ),
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -100,16 +96,16 @@ class _MaterialsPageState extends State<MaterialsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
-                          // onTap: () {
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => SubjectContentScreen(
-                          //         materialTitle: material['title']!,
-                          //       ),
-                          //     ),
-                          //   );
-                          // },
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SubjectContentScreen(
+                                  materialTitle: material['title']!,
+                                ),
+                              ),
+                            );
+                          },
                           child: Row(
                             children: [
                               const Icon(Icons.menu_book),
@@ -146,6 +142,7 @@ class _MaterialsPageState extends State<MaterialsPage> {
           ],
         ),
       ),
+
     );
   }
 }

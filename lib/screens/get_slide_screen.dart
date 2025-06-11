@@ -1,15 +1,17 @@
+// lib/screens/get_slide_screen.dart
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:slide_team_project/constants/colors.dart';
+import 'package:provider/provider.dart';
+import '../constants/colors.dart';
 import '../constants/text_styles.dart';
-import '../screens/chat_screen.dart';
+import '../view_models/get_slide_viewmodel.dart';
+import '../widgets/common/custom_button.dart';
 import '../widgets/get_screen/tappable_image.dart';
+import 'chat_screen.dart';
+import 'materials_screen.dart';
 
 class GetSlideScreen extends StatelessWidget {
-  final String name;
-  final String email;
-  final String slideTitle;
-  final String description;
+  final String name, email, slideTitle, description;
   final File? imageFile;
 
   const GetSlideScreen({
@@ -37,66 +39,63 @@ class GetSlideScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Get Slide', style: sectionTitleStyle.copyWith(color: deepForestGreen)),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Container(
+    return ChangeNotifierProvider(
+      create: (_) => GetSlideViewModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Get Slide',
+            style: sectionTitleStyle.copyWith(color: deepForestGreen),
+          ),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: whiteColor,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-              border: Border.all(color: Colors.grey.shade300),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (imageFile != null)
-                  Center(child: TappableImage(imageFile: imageFile!)),
-
-                const SizedBox(height: 16),
-                buildInfoRow(context, 'Name:', name),
-                const Divider(height: 20, thickness: 1),
-                buildInfoRow(context, 'Email:', email),
-                const Divider(height: 20, thickness: 1),
-                buildInfoRow(context, 'Slide Title:', slideTitle),
-                const Divider(height: 20, thickness: 1),
-                buildInfoRow(context, 'Description:', description),
-                const SizedBox(height: 24),
-
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ChatScreen(),
-                      ),
-                    );
-                  },
-
-                  icon: const Icon(Icons.add),
-                  label: const Text('Borrowing slides'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: deepForestGreen,
-                    foregroundColor: whiteColor,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
                   ),
-                ),
-              ],
+                ],
+                border: Border.all(color: Colors.grey.shade300),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (imageFile != null)
+                    Center(child: TappableImage(imageFile: imageFile!)),
+                  const SizedBox(height: 16),
+                  buildInfoRow(context, 'Name:', name),
+                  const Divider(height: 20, thickness: 1),
+                  buildInfoRow(context, 'Email:', email),
+                  const Divider(height: 20, thickness: 1),
+                  buildInfoRow(context, 'Slide Title:', slideTitle),
+                  const Divider(height: 20, thickness: 1),
+                  buildInfoRow(context, 'Description:', description),
+                  const SizedBox(height: 24),
+                  Consumer<GetSlideViewModel>(
+                    builder: (context, viewModel, _) {
+                      return CustomButton(
+                        text: 'Borrowing slides',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SubjectContentScreen(materialTitle: '',)), // عدل حسب اسم صفحة الشاتينج
+                          );
+                        },
+                      );
+
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

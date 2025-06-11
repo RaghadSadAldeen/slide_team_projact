@@ -1,4 +1,3 @@
-// lib/screens/login_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants/colors.dart';
@@ -70,8 +69,19 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         CustomButton(
                           text: 'Sign In',
-                          onPressed: () => viewModel.login(context),
+                          onPressed: () async {
+                            final success = await viewModel.login();
+                            if (success) {
+                              Navigator.pushReplacementNamed(context, '/main');
+
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(viewModel.errorMessage)),
+                              );
+                            }
+                          },
                         ),
+
                       ],
                     ),
                   ),
