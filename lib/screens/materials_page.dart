@@ -7,6 +7,7 @@ import 'package:slide_team_project/widgets/app_bar.dart';
 import 'package:slide_team_project/constants/bottom_nav_bar.dart';
 import 'package:slide_team_project/view_models/favorites_view_model.dart';
 
+
 class MaterialsPage extends StatefulWidget {
   final String majorName;
   final List<Map<String, String>> materials;
@@ -16,7 +17,6 @@ class MaterialsPage extends StatefulWidget {
     required this.majorName,
     required this.materials,
   });
-
   @override
   State<MaterialsPage> createState() => _MaterialsPageState();
 }
@@ -42,7 +42,6 @@ class _MaterialsPageState extends State<MaterialsPage> {
         break;
     }
   }
-
   @override
   Widget build(BuildContext context) {
     final userId = FirebaseAuth.instance.currentUser?.uid ?? "guest_user";
