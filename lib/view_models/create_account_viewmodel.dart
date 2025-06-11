@@ -24,7 +24,7 @@ class CreateAccountViewModel extends ChangeNotifier {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Account created for ${user.email}")),
         );
-        Navigator.of(context).pushReplacementNamed('/login');
+        Navigator.of(context).pushReplacementNamed('/main');
       }
     } catch (error) {
       if (context.mounted) {

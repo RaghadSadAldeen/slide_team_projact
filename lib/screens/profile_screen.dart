@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
-
 import '../models/user_profile.dart';
 import '../view_models/profile_view_model.dart';
 import '../view_models/user_provider.dart';
@@ -22,7 +21,6 @@ class ProfileScreen extends StatelessWidget {
     final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
 
     if (userId.isEmpty) {
-      // مثلاً عرض رسالة خطأ أو إعادة توجيه لشاشة تسجيل الدخول
       return Scaffold(
         body: Center(
           child: Text('User not logged in', style: TextStyle(color: Colors.red)),
@@ -30,17 +28,12 @@ class ProfileScreen extends StatelessWidget {
       );
     }
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) {
-            final vm = ProfileViewModel();
-            vm.setUserProfile(userProfile); // نمرر الملف الموجود
-            return vm;
-          },
-        ),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-      ],
+    return ChangeNotifierProvider(
+      create: (_) {
+        final vm = ProfileViewModel();
+        vm.setUserProfile(userProfile);
+        return vm;
+      },
       child: Scaffold(
         backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
@@ -52,7 +45,11 @@ class ProfileScreen extends StatelessWidget {
         body: Consumer2<ProfileViewModel, UserProvider>(
           builder: (context, profileVM, userProvider, _) {
             final userProfile = profileVM.userProfile;
-            userProvider.setUserProfile(userProfile);
+
+            // فقط أول مرة قمنا بتحميل البيانات، لا تكرر التحديث كل مرة.
+            if (userProvider.userProfile.userId.isEmpty) {
+              userProvider.setUserProfile(userProfile);
+            }
 
             return SingleChildScrollView(
               child: Column(
@@ -101,7 +98,7 @@ class ProfileScreen extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (_) => EditProfileScreen(
                                   userProfile: userProfile,
-                                  userId: userId, // نمرر userId الصحيح
+                                  userId: userId,
                                 ),
                               ),
                             );

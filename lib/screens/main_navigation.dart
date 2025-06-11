@@ -5,7 +5,9 @@ import '../constants/bottom_nav_bar.dart';
 import '../view_models/user_provider.dart';
 import 'add_slide_screen.dart';
 import 'chat_screen.dart';
+import 'chatlist_screen.dart';
 import 'home_page.dart';
+import 'notifications_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   final int initialIndex;
@@ -40,10 +42,12 @@ class _MainNavigationState extends State<MainNavigation> {
       case 0:
         return CollegeGridScreen();
       case 1:
-        return ChatScreen();
+        return NotificationsScreen();
       case 2:
-        return AddSlideScreen();
+        return ChatListScreen();
       case 3:
+        return AddSlideScreen();
+      case 4:
         return ProfileScreen(
           userProfile: userProfile,
         );

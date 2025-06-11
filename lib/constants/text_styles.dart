@@ -30,10 +30,10 @@ const TextStyle bodyTextStyle = TextStyle(
 );
 //
 // // للنصوص الثانوية أو التوضيحية
-// const TextStyle subtitleTextStyle = TextStyle(
-//   fontSize: 14,
-//   color: Colors.grey,
-// );
+const TextStyle subtitleTextStyle = TextStyle(
+  fontSize: 14,
+  color: Colors.grey,
+);
 //
 // للأزرار الأساسية
 const TextStyle buttonTextStyle = TextStyle(

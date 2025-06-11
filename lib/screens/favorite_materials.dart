@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart' as flutter;
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:slide_team_project/constants/bottom_nav_bar.dart';
+import '../constants/bottom_nav_bar.dart';
+import 'main_navigation.dart';
 import 'package:slide_team_project/constants/colors.dart';
 import 'package:slide_team_project/view_models/favorites_view_model.dart';
 
@@ -13,13 +14,20 @@ class FavoriteMaterialsPage extends StatefulWidget {
 }
 
 class _FavoriteMaterialsPageState extends State<FavoriteMaterialsPage> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   final FavoritesViewModel _viewModel = FavoritesViewModel();
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainNavigation(initialIndex: index),
+      ),
+    );
   }
 
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 import '../constants/text_styles.dart';
-import '../view_models/chatlist_view_model.dart';
 import '../models/chat_model.dart';
+import '../view_models/chatlist_view_model.dart';
 import 'chat_screen.dart';
 
 class ChatListScreen extends StatefulWidget {
@@ -42,8 +42,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
         ),
       ),
 
-      body: StreamBuilder<List<Chat>>(
-        stream: _vm.getChatsForCurrentUser(),
+      body: StreamBuilder<List<ChatSummary>>(
+        stream: _vm.getChats(),
         builder: (context, snap) {
           if (!snap.hasData) {
             return const Center(
@@ -58,24 +58,21 @@ class _ChatListScreenState extends State<ChatListScreen> {
             );
           }
 
-          final me = _vm.currentUserEmail;
+          final me = _vm.currentUser?.email ?? '';
 
           return ListView.separated(
             itemCount: chats.length,
             separatorBuilder: (_, __) => const Divider(height: 1),
             itemBuilder: (_, i) {
               final chat = chats[i];
-              final other = chat.users.firstWhere(
-                    (e) => e != me,
-                orElse: () => 'Unknown',
-              );
+              final other = chat.otherUserEmail;
 
               return ListTile(
                 tileColor: Colors.white,
                 leading: CircleAvatar(
                   backgroundColor: deepForestGreen,
                   child: Text(
-                    other[0].toUpperCase(),
+                    other.isNotEmpty ? other[0].toUpperCase() : '?',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -90,7 +87,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   style: subtitleTextStyle,
                 ),
                 trailing: Text(
-                  _formatTime(chat.timestamp),
+                  _formatTime(chat.lastMessageTime),
                   style: subtitleTextStyle,
                 ),
                 onTap: () {
@@ -98,9 +95,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (_) => ChatScreen(
-                        chatId: chat.id,
-                        otherUserEmail: other,
-                        currentUserEmail: me,
+
                       ),
                     ),
                   );
@@ -109,33 +104,6 @@ class _ChatListScreenState extends State<ChatListScreen> {
             },
           );
         },
-      ),
-
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        backgroundColor: Colors.white,
-        selectedItemColor: deepForestGreen,
-        unselectedItemColor: warmBeige,
-        onTap: (index) {
-          // فقط خيار "Chats" يعمل
-          if (index == 0) {
-            setState(() => _currentIndex = index);
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble_outline),
-            label: 'Chats',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.circle_outlined),
-            label: 'Status',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.call_outlined),
-            label: 'Calls',
-          ),
-        ],
       ),
     );
   }

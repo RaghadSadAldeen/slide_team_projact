@@ -15,7 +15,7 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: selectedIndex,
-      onTap: (index) => onItemTapped(index),  // هنا فقط نبلغ MainNavigation عن التغيير
+      onTap: (index) => onItemTapped(index),
       type: BottomNavigationBarType.fixed,
       backgroundColor: const Color(0xFF1D3B2A),
       selectedItemColor: whiteColor,
@@ -29,6 +29,10 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications_none, size: 28),
+          label: 'Notifications',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.chat, size: 28),
           label: 'Notifications',
         ),
         BottomNavigationBarItem(

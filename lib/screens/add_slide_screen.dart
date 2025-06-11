@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../view_models/add_slide_view_model.dart';
+import '../view_models/user_provider.dart';
 import '../widgets/Add_screen/upload_image_widget.dart';
 import '../widgets/common/custom_button.dart';
 import '../widgets/common/custom_text_field.dart';
@@ -26,6 +27,7 @@ class _AddSlideBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<AddSlideViewModel>(context);
+    final userProfile = Provider.of<UserProvider>(context).userProfile;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,20 +50,25 @@ class _AddSlideBody extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    radius: 28,
-                    backgroundImage: viewModel.selectedImage != null
-                        ? FileImage(viewModel.selectedImage!)
-                        : const AssetImage('assets/images/icons8-user-96.png') as ImageProvider,
+                    radius: 50,
+                    backgroundColor: Colors.grey.shade300,
+                    backgroundImage: userProfile.imagePath.isNotEmpty
+                        ? (userProfile.imagePath.startsWith('http')
+                        ? NetworkImage(userProfile.imagePath)
+                        : FileImage(File(userProfile.imagePath)) as ImageProvider)
+                        : null,
+                    child: userProfile.imagePath.isEmpty
+                        ? const Icon(Icons.person, size: 60, color: whiteColor)
+                        : null,
                   ),
                   const SizedBox(width: 12),
-                  const Text(
-                    'Raghad Sad aldeen', // ممكن تجيبها من ViewModel لاحقاً
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  Text(
+                    userProfile.name.isNotEmpty ? userProfile.name : 'No Name',
+                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
               const SizedBox(height: 24),
-
               CustomTextField(
                 hintText: 'Name',
                 icon: Icons.person,
@@ -84,16 +91,12 @@ class _AddSlideBody extends StatelessWidget {
                 controller: viewModel.descriptionController,
                 keyboardType: TextInputType.multiline,
               ),
-
               const SizedBox(height: 12),
-
               UploadImageWidget(
                 selectedImage: viewModel.selectedImage,
                 onImageSelected: (file) => viewModel.setImage(file),
               ),
-
               const SizedBox(height: 24),
-
               CustomButton(
                 onPressed: () async {
                   if (!viewModel.isFormValid) {
@@ -102,9 +105,11 @@ class _AddSlideBody extends StatelessWidget {
                     );
                     return;
                   }
+
                   print("🟢 Save button pressed");
                   await viewModel.saveSlideToFirebase();
                   print("🟢 saveSlideToFirebase() finished");
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -117,11 +122,9 @@ class _AddSlideBody extends StatelessWidget {
                       ),
                     ),
                   );
-
                 },
                 text: 'Save',
               ),
-
             ],
           ),
         ),
