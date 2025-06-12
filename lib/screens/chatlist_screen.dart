@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../constants/colors.dart';
 import '../constants/text_styles.dart';
 import '../models/chat_model.dart';
+import '../view_models/add_slide_view_model.dart';
 import '../view_models/chatlist_view_model.dart';
+import '../view_models/user_provider.dart';
 import 'chat_screen.dart';
 
 class ChatListScreen extends StatefulWidget {
@@ -18,6 +21,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<AddSlideViewModel>(context);
+    final userProfile = Provider.of<UserProvider>(context).userProfile;
     return Scaffold(
       backgroundColor: sageGreen,
       appBar: AppBar(
@@ -25,6 +30,20 @@ class _ChatListScreenState extends State<ChatListScreen> {
         centerTitle: true,
         elevation: 1,
         iconTheme: const IconThemeData(color: deepForestGreen),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: deepForestGreen),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatScreen(
+                  userProfile: userProfile,
+                  chatId: 'default_chat_id',
+                ),
+              ),
+            );
+          },
+        ),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -95,7 +114,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (_) => ChatScreen(
-
+                        userProfile: userProfile,
+                        chatId: chat.chatId,
                       ),
                     ),
                   );

@@ -11,6 +11,7 @@ import 'package:slide_team_project/screens/home_page.dart';
 
 import 'package:slide_team_project/view_models/user_provider.dart';
 import 'package:slide_team_project/view_models/materials_view_model.dart';
+import 'package:slide_team_project/view_models/add_slide_view_model.dart'; // تأكد من المسار الصحيح
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => MaterialsViewModel()),
+        ChangeNotifierProvider(create: (_) => AddSlideViewModel()), // أضف هذا السطر
       ],
       child: const MyApp(),
     ),

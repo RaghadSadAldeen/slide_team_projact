@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../constants/colors.dart';
 import '../constants/text_styles.dart';
-import '../constants/bottom_nav_bar.dart';   // إضافة استيراد BottomNavBar
-import 'main_navigation.dart';               // إضافة استيراد MainNavigation
+import '../constants/bottom_nav_bar.dart';
+import 'main_navigation.dart';
 import '../models/user_profile.dart';
 import '../view_models/edit_profile_viewmodel.dart';
 import '../widgets/common/custom_button.dart';

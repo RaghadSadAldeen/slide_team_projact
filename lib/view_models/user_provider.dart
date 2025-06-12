@@ -12,15 +12,12 @@ class UserProvider extends ChangeNotifier {
   }
 
   void updateImagePath(String newPath) {
-    _userProfile = UserProfile(
-      userId: _userProfile.userId,
-      name: _userProfile.name,
-      email: _userProfile.email,
-      phone: _userProfile.phone,
-      address: _userProfile.address,
-      major: _userProfile.major,
-      imagePath: newPath,
-    );
+    _userProfile = _userProfile.copyWith(imagePath: newPath);
+    notifyListeners();
+  }
+
+  void setUid(String uid) {
+    _userProfile = _userProfile.copyWith(userId: uid);
     notifyListeners();
   }
 }
