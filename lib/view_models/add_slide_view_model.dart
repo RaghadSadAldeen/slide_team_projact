@@ -1,72 +1,90 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/add_slide_model.dart';
-import '../services/database_service.dart';
 
 class AddSlideViewModel extends ChangeNotifier {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  late AddSlideModel _slide;
+  AddSlideModel get slide => _slide;
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController slideTitleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
-  File? selectedImage;
-  bool isLoading = false;
+  String imagePath = '';
+  String slideId = '';
 
-  final DatabaseService _databaseService = DatabaseService();
+  bool get isFormValid {
+    return nameController.text.trim().isNotEmpty &&
+        emailController.text.trim().isNotEmpty &&
+        slideTitleController.text.trim().isNotEmpty &&
+        descriptionController.text.trim().isNotEmpty &&
+        imagePath.isNotEmpty;
+  }
 
-  void setImage(File image) {
-    selectedImage = image;
+  void initialize(AddSlideModel slide, String slideId) {
+    _slide = slide;
+    this.slideId = slideId;
+
+    nameController.text = slide.name;
+    emailController.text = slide.email;
+    slideTitleController.text = slide.slideTitle;
+    descriptionController.text = slide.description;
+    imagePath = slide.imageUrl;
+  }
+
+  void setImagePath(String path) {
+    imagePath = path;
     notifyListeners();
   }
 
-  bool get isFormValid {
-    return nameController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        slideTitleController.text.isNotEmpty &&
-        descriptionController.text.isNotEmpty &&
-        selectedImage != null;
+  void clearImage() {
+    imagePath = '';
+    notifyListeners();
   }
-  Future<bool> saveSlideToFirebase() async {
-    print("Starting to save slide...");
 
-    if (!isFormValid) {
-      print("Form is invalid");
-      return false;
-    }
-
+  Future<String?> addSlide(String slideId) async {
     try {
-      isLoading = true;
-      notifyListeners();
-
-      final slide = SlideModel(
-        name: nameController.text,
-        email: emailController.text,
-        slideTitle: slideTitleController.text,
-        description: descriptionController.text,
+      _slide = AddSlideModel(
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        slideTitle: slideTitleController.text.trim(),
+        description: descriptionController.text.trim(),
+        imageUrl: imagePath,
         createdAt: DateTime.now(),
       );
 
-      print("Slide data prepared: ${slide.toJson()}");
-      await _databaseService.saveSlide(slide);
-      print("Slide saved successfully to Firestore.");
-      return true;
-    } catch (e) {
-      print("Error saving slide: $e");
-      return false;
-    } finally {
-      isLoading = false;
+      await _firestore.collection('slides').doc(slideId).set({
+        'name': _slide.name,
+        'email': _slide.email,
+        'slideTitle': _slide.slideTitle,
+        'description': _slide.description,
+        'imageUrl': _slide.imageUrl,
+        'createdAt': _slide.createdAt?.toIso8601String(),
+      }, SetOptions(merge: true));
+
       notifyListeners();
+      return null;
+    } catch (e) {
+      return e.toString();
     }
   }
 
 
+  void clearForm() {
+    nameController.clear();
+    emailController.clear();
+    slideTitleController.clear();
+    descriptionController.clear();
+    clearImage();
+  }
 
-  @override
-  void dispose() {
+  void disposeControllers() {
     nameController.dispose();
     emailController.dispose();
     slideTitleController.dispose();
     descriptionController.dispose();
-    super.dispose();
   }
 }

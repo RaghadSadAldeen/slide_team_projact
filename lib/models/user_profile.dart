@@ -52,4 +52,25 @@ class UserProfile {
       imagePath: map['imagePath'] ?? '',
     );
   }
+
+  UserProfile copyWith({
+    String? userId,
+    String? name,
+    String? email,
+    String? phone,
+    String? address,
+    String? major,
+    String? imagePath,
+  })
+  {
+    return UserProfile(
+      userId: userId ?? this.userId,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      address: address ?? this.address,
+      major: major ?? this.major,
+      imagePath: imagePath ?? this.imagePath,
+    );
+  }
 }

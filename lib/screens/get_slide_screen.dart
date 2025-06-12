@@ -1,101 +1,59 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants/colors.dart';
 import '../constants/text_styles.dart';
-import '../view_models/get_slide_viewmodel.dart';
-import '../widgets/common/custom_button.dart';
-import '../widgets/get_screen/tappable_image.dart';
-import 'chat_screen.dart';
+import '../view_models/get_slide_view_model.dart';
+import '../view_models/user_provider.dart';
+import '../widgets/get_slidew.dart';
 
-class GetSlideScreen extends StatelessWidget {
-  final String name, email, slideTitle, description;
-  final File? imageFile;
+class GetSlideScreen extends StatefulWidget {
+  const GetSlideScreen({super.key});
 
-  const GetSlideScreen({
-    super.key,
-    required this.name,
-    required this.email,
-    required this.slideTitle,
-    required this.description,
-    this.imageFile,
-  });
+  @override
+  State<GetSlideScreen> createState() => _GetSlideScreenState();
+}
 
-  Widget buildInfoRow(BuildContext context, String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 4),
-          Text(value, style: const TextStyle(fontSize: 18)),
-        ],
-      ),
+class _GetSlideScreenState extends State<GetSlideScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() =>
+        Provider.of<GetSlideViewModel>(context, listen: false).fetchSlides()
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => GetSlideViewModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Get Slide',
-            style: sectionTitleStyle.copyWith(color: deepForestGreen),
-          ),
-          centerTitle: true,
+    final userProfile = Provider.of<UserProvider>(context).userProfile;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Shared Slides',
+          style: sectionTitleStyle.copyWith(color: deepForestGreen),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
+        centerTitle: true,
+      ),
+      body: Consumer<GetSlideViewModel>(
+        builder: (context, viewModel, _) {
+          final slides = viewModel.slides;
+
+          if (slides.isEmpty) {
+            return const Center(child: Text("No slides yet."));
+          }
+
+          return ListView.builder(
             padding: const EdgeInsets.all(16),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (imageFile != null)
-                    Center(child: TappableImage(imageFile: imageFile!)),
-                  const SizedBox(height: 16),
-                  buildInfoRow(context, 'Name:', name),
-                  const Divider(height: 20, thickness: 1),
-                  buildInfoRow(context, 'Email:', email),
-                  const Divider(height: 20, thickness: 1),
-                  buildInfoRow(context, 'Slide Title:', slideTitle),
-                  const Divider(height: 20, thickness: 1),
-                  buildInfoRow(context, 'Description:', description),
-                  const SizedBox(height: 24),
-                  Consumer<GetSlideViewModel>(
-                    builder: (context, viewModel, _) {
-                      return CustomButton(
-                        text: 'Borrowing slides',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ChatScreen()),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+            itemCount: slides.length,
+            itemBuilder: (context, index) {
+              final slide = slides[index];
+              return GetSlideCard(
+                slide: slide,
+                currentUserId: userProfile.userId,
+              );
+            },
+          );
+        },
       ),
     );
   }

@@ -8,38 +8,22 @@ class DatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  Future<String> uploadImage(File imageFile) async {
-    print("uploadImage() called with path: ${imageFile.path}");
-
-    if (!await imageFile.exists()) {
-      print("The file does NOT exist at path: ${imageFile.path}");
-      throw Exception("Image file does not exist.");
-    }
+  Future<String> uploadImageToStorage({
+    required File file,
+    required String path,
+  }) async {
     try {
-      print("Uploading image...");
-      final fileExtension = path.extension(imageFile.path); // e.g. .jpg
-
-      final fileName = '${DateTime.now().millisecondsSinceEpoch}$fileExtension';
-
-
-      final storageRef = _storage.ref().child('slides_images').child(fileName);
-
-
-      final uploadTask = await storageRef.putFile(imageFile);
-      print("Image uploaded successfully");
-
-      await Future.delayed(Duration(seconds: 1));
-      final url = await uploadTask.ref.getDownloadURL();
-      print("Image URL: $url");
-
-      return url;
+      final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+      final ref = _storage.ref().child('$path/$fileName');
+      await ref.putFile(file);
+      return await ref.getDownloadURL();
     } catch (e) {
-      print("Failed to upload image: $e");
       rethrow;
     }
   }
 
-  Future<void> saveSlide(SlideModel slide) async {
+
+  Future<void> saveSlide(AddSlideModel slide) async {
     try {
       print("Saving slide data to Firestore: ${slide.toJson()}");
       await _firestore.collection('slides').add(slide.toJson());
