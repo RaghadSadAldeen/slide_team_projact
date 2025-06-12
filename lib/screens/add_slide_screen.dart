@@ -162,6 +162,7 @@ class _AddSlideBody extends StatelessWidget {
                         builder: (_) => ChangeNotifierProvider(
                           create: (_) => GetSlideViewModel(),
                           child: const GetSlideScreen(),
+
                         ),
                       ),
                     );

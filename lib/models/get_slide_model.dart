@@ -19,7 +19,7 @@ class GetSlideModel {
     return GetSlideModel(
       name: data['name'],
       email: data['email'],
-      title: data['title'],
+      title: data['slideTitle'],
       description: data['description'],
       imageUrl: data['imageUrl'],
     );
