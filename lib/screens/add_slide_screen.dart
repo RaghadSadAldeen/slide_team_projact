@@ -49,7 +49,6 @@ class _AddSlideBody extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // User info (Profile Image + Name)
               Row(
                 children: [
                   CircleAvatar(
@@ -73,7 +72,6 @@ class _AddSlideBody extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
-              // Form Fields
               CustomTextField(
                 hintText: 'Name',
                 icon: Icons.person,

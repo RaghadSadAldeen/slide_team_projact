@@ -46,7 +46,6 @@ class ProfileScreen extends StatelessWidget {
           builder: (context, profileVM, userProvider, _) {
             final userProfile = profileVM.userProfile;
 
-            // فقط أول مرة قمنا بتحميل البيانات، لا تكرر التحديث كل مرة.
             if (userProvider.userProfile.userId.isEmpty) {
               userProvider.setUserProfile(userProfile);
             }

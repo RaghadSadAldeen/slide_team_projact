@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:slide_team_project/datasource/data.dart';
 import 'package:slide_team_project/models/college.dart';
-import '../constants/bottom_nav_bar.dart'; // تعديل الاستيراد لمسار نسبي
-import 'main_navigation.dart'; // استيراد شاشة التنقل الرئيسية
+import '../constants/bottom_nav_bar.dart';
+import 'main_navigation.dart';
 import 'package:slide_team_project/widgets/major_card.dart';
 import 'package:slide_team_project/widgets/app_bar.dart';
 import 'materials_page.dart';
